@@ -8,6 +8,7 @@ import { HeroSlider } from "@/components/site/HeroSlider";
 import { ServiceFlipCard } from "@/components/site/ServiceFlipCard";
 import { ContactForm } from "@/components/site/ContactForm";
 import { Reveal } from "@/components/site/Reveal";
+import { PARTNERS, PartnerEmblem } from "@/components/site/PartnerEmblem";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -45,8 +46,6 @@ const blogPosts = [
   { title: "What are the requirements to apply for a Golden Visa?", desc: "Key criteria and steps for long-term residence options in the UAE." },
   { title: "Here's what you need to open a business in the UAE", desc: "From licensing and typing to setup paths — a quick orientation for new businesses." },
 ];
-
-const partners = ["MOHRE", "ICA", "SEDD", "EHS", "Municipality", "MOJ", "GDRFA", "MoHAP", "Tasheel", "Tawjeeh", "UAE Pass", "Smart Dubai"];
 
 function Home() {
   return (
@@ -126,26 +125,24 @@ function Home() {
       </section>
 
       {/* Partners marquee */}
-      <section className="py-16 bg-primary text-primary-foreground overflow-hidden">
+      <section className="py-16 bg-card overflow-hidden border-y border-border">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-primary-foreground">Our Strategic Partners</h2>
-              <p className="mt-2 text-primary-foreground/80">Some of our trusted partners whose support is critical to our success.</p>
+              <div className="text-[11px] uppercase tracking-[0.2em] text-gold font-semibold">Strategic Partners</div>
+              <h2 className="mt-2 text-2xl md:text-3xl font-semibold text-foreground">UAE government entities we work with</h2>
             </div>
           </Reveal>
         </div>
-        <div className="mt-10 overflow-hidden">
+        <div className="mt-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
           <div className="marquee">
-            {[...partners, ...partners].map((p, i) => (
-              <div key={i} className="grid h-16 w-40 place-items-center rounded-md bg-card/10 border border-card/20 text-gold font-semibold">
-                {p}
-              </div>
+            {[...PARTNERS, ...PARTNERS].map((p, i) => (
+              <PartnerEmblem key={`${p.short}-${i}`} partner={p} variant="strip" />
             ))}
           </div>
         </div>
         <div className="mt-8 text-center">
-          <Link to="/partners" className="inline-flex items-center gap-1 text-gold hover:underline">
+          <Link to="/partners" className="inline-flex items-center gap-1 text-gold font-semibold hover:underline">
             View all partners <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
