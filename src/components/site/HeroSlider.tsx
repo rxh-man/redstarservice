@@ -49,7 +49,7 @@ export function HeroSlider() {
     <section
       className="relative overflow-hidden text-primary-foreground"
       style={{
-        backgroundImage: `linear-gradient(135deg, oklch(0.18 0.08 270 / 0.92), oklch(0.32 0.13 263 / 0.85)), url(${heroBg})`,
+        backgroundImage: `linear-gradient(135deg, oklch(0.78 0.14 85 / 0.92), oklch(0.6 0.13 70 / 0.85)), url(${heroBg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
