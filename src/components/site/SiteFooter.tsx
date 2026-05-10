@@ -23,7 +23,6 @@ export function SiteFooter() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li><Link to="/" className="hover:text-gold">Home</Link></li>
             <li><Link to="/services" className="hover:text-gold">Services</Link></li>
-            <li><Link to="/smart-pro" className="hover:text-gold">Smart PRO</Link></li>
             <li><Link to="/partners" className="hover:text-gold">Partners</Link></li>
             <li><Link to="/quotation" className="hover:text-gold">Request Quotation</Link></li>
             <li><Link to="/contact" className="hover:text-gold">Contact</Link></li>
@@ -37,17 +36,26 @@ export function SiteFooter() {
             <li>Tawjeeh</li>
             <li>Immigration</li>
             <li>Emirates ID</li>
-            <li>Typing & Translation</li>
-            <li>SEDD & Municipality</li>
+            <li>Typing &amp; Translation</li>
+            <li>SEDD &amp; Municipality</li>
           </ul>
         </div>
 
         <div>
           <h4 className="text-gold font-semibold mb-3">Contact</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
-            <li className="flex gap-2"><MapPin className="h-4 w-4 text-gold mt-0.5" /> Al Sajaa Industrial Area, Sharjah, UAE</li>
-            <li className="flex gap-2"><Phone className="h-4 w-4 text-gold mt-0.5" /> 055 331 3325</li>
-            <li className="flex gap-2"><Mail className="h-4 w-4 text-gold mt-0.5" /> info@tahleel.ae</li>
+            <li className="flex items-start gap-2">
+              <MapPin className="h-4 w-4 text-gold mt-0.5 shrink-0" />
+              <span>Al Sajaa Industrial Area, Sharjah, UAE</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Phone className="h-4 w-4 text-gold mt-0.5 shrink-0" />
+              <span>055 331 3325</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Mail className="h-4 w-4 text-gold mt-0.5 shrink-0" />
+              <span>info@tahleel.ae</span>
+            </li>
           </ul>
         </div>
       </div>
