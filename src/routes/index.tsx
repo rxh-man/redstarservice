@@ -125,7 +125,7 @@ function Home() {
       </section>
 
       {/* Partners marquee */}
-      <section className="py-16 bg-card overflow-hidden border-y border-border">
+      <section className="py-16 bg-white overflow-hidden border-y border-border">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <div className="text-center">
@@ -134,8 +134,28 @@ function Home() {
             </div>
           </Reveal>
         </div>
-        <div className="mt-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        {/* Real logos strip on white bg */}
+        <div className="mt-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
           <div className="marquee">
+            {[...PARTNERS.filter(p => p.logo), ...PARTNERS.filter(p => p.logo)].map((p, i) => (
+              <div
+                key={`logo-${p.short}-${i}`}
+                className="flex items-center justify-center h-28 min-w-[200px] px-8 bg-white"
+                title={p.name}
+              >
+                <img
+                  src={p.logo}
+                  alt={p.short + " logo"}
+                  loading="lazy"
+                  className="max-h-20 max-w-[160px] object-contain transition hover:scale-105"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* Secondary strip for the rest */}
+        <div className="mt-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+          <div className="marquee marquee-reverse">
             {[...PARTNERS, ...PARTNERS].map((p, i) => (
               <PartnerEmblem key={`${p.short}-${i}`} partner={p} variant="strip" />
             ))}
