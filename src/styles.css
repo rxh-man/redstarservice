@@ -171,6 +171,11 @@
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
   }
+  .marquee-reverse { animation: marquee-reverse 40s linear infinite; }
+  @keyframes marquee-reverse {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
 
   .fade-slide { animation: fadeSlide .8s ease both; }
   @keyframes fadeSlide {
