@@ -15,6 +15,14 @@ import shjMunLogo from "@/assets/partners/sharjah_municipality.png";
 import tasheelLogo from "@/assets/partners/tasheel.png";
 import tawjeehLogo from "@/assets/partners/tawjeeh.png";
 import rakDedLogo from "@/assets/partners/rak_ded.png";
+import abuDhabiJudicialLogo from "@/assets/partners/abu_dhabi_judicial.png";
+import ajmanDedLogo from "@/assets/partners/ajman_ded.png";
+import amerLogo from "@/assets/partners/amer.png";
+import dewaLogo from "@/assets/partners/dewa.png";
+import dubaiCourtsLogo from "@/assets/partners/dubai_courts.png";
+import dubaiDetLogo from "@/assets/partners/dubai_det.png";
+import dubaiMunLogo from "@/assets/partners/dubai_municipality.png";
+import federalJudiciaryLogo from "@/assets/partners/federal_judiciary.png";
 
 export type Partner = {
   short: string;
@@ -33,6 +41,12 @@ export const PARTNERS: Partner[] = [
   { short: "RTA",       name: "Roads & Transport Authority", arabic: "هيئة الطرق والمواصلات",  icon: Car,           domain: "rta.ae", logo: rtaLogo },
   { short: "SEDD",      name: "Sharjah Economic Development", arabic: "دائرة التنمية الاقتصادية", icon: Building2,  domain: "sedd.ae", logo: seddLogo },
   { short: "DED Dubai", name: "Dubai Economy & Tourism", arabic: "اقتصادية دبي",                icon: Building2,    domain: "ded.ae" },
+  { short: "DET",       name: "Dubai Economy & Tourism", arabic: "دبي للاقتصاد والسياحة",       icon: Building2,    domain: "det.gov.ae", logo: dubaiDetLogo },
+  { short: "Ajman DED", name: "Ajman Department of Economic Development", arabic: "دائرة التنمية الاقتصادية - عجمان", icon: Building2, domain: "ajmanded.ae", logo: ajmanDedLogo },
+  { short: "AMER",      name: "AMER Services (GDRFA Dubai)", arabic: "خدمات أمر",               icon: BadgeCheck,    domain: "amer.gdrfad.gov.ae", logo: amerLogo },
+  { short: "Dubai Courts", name: "Dubai Courts",         arabic: "محاكم دبي",                  icon: Scale,         domain: "dc.gov.ae", logo: dubaiCourtsLogo },
+  { short: "ADJD",      name: "Abu Dhabi Judicial Department", arabic: "دائرة القضاء - أبوظبي", icon: Scale,         domain: "adjd.gov.ae", logo: abuDhabiJudicialLogo },
+  { short: "Federal Judiciary", name: "UAE Federal Judiciary", arabic: "القضاء الاتحادي",       icon: Scale,         domain: "mojfederal.gov.ae", logo: federalJudiciaryLogo },
   { short: "GDRFA",     name: "General Directorate of Residency & Foreigners", arabic: "الإقامة وشؤون الأجانب", icon: Plane, domain: "gdrfad.gov.ae", logo: gdrfaLogo },
   { short: "ICP",       name: "Identity, Citizenship, Customs & Ports", arabic: "الهوية والجنسية والجمارك", icon: IdCard, domain: "icp.gov.ae", logo: icpLogo },
   { short: "MoHAP",     name: "Ministry of Health & Prevention", arabic: "وزارة الصحة ووقاية المجتمع", icon: Stethoscope, domain: "mohap.gov.ae" },
@@ -42,7 +56,7 @@ export const PARTNERS: Partner[] = [
   { short: "MOE",       name: "Ministry of Education",   arabic: "وزارة التربية والتعليم",      icon: GraduationCap, domain: "moe.gov.ae" },
   { short: "FTA",       name: "Federal Tax Authority",   arabic: "الهيئة الاتحادية للضرائب",     icon: Banknote,      domain: "tax.gov.ae" },
   { short: "Sharjah Municipality", name: "Sharjah Municipality", arabic: "بلدية الشارقة",      icon: Landmark,      domain: "portal.shjmun.gov.ae", logo: shjMunLogo },
-  { short: "Dubai Municipality", name: "Dubai Municipality", arabic: "بلدية دبي",              icon: Landmark,      domain: "dm.gov.ae" },
+  { short: "Dubai Municipality", name: "Dubai Municipality", arabic: "بلدية دبي",              icon: Landmark,      domain: "dm.gov.ae", logo: dubaiMunLogo },
   { short: "Tasheel",   name: "Tasheel Service Centers", arabic: "مراكز تسهيل",                icon: FileSignature, domain: "tasheel.ae", logo: tasheelLogo },
   { short: "Tawjeeh",   name: "Tawjeeh Centers",         arabic: "مراكز توجيه",                icon: Globe,         domain: "tawjeeh.ae", logo: tawjeehLogo },
   { short: "UAE Pass",  name: "UAE Pass · Digital Identity", arabic: "الهوية الرقمية الإماراتية", icon: BadgeCheck,  domain: "uaepass.ae" },
@@ -51,7 +65,7 @@ export const PARTNERS: Partner[] = [
   { short: "TDRA",      name: "Telecommunications & Digital Government", arabic: "هيئة تنظيم الاتصالات", icon: Zap, domain: "tdra.gov.ae" },
   { short: "U.AE",      name: "The Official UAE Government Portal", arabic: "البوابة الرسمية لحكومة الإمارات", icon: Flag, domain: "u.ae" },
   { short: "SEWA",      name: "Sharjah Electricity, Water & Gas", arabic: "كهرباء ومياه الشارقة", icon: Zap,         domain: "sewa.gov.ae", logo: sewaLogo },
-  { short: "DEWA",      name: "Dubai Electricity & Water Authority", arabic: "كهرباء ومياه دبي", icon: Zap,         domain: "dewa.gov.ae" },
+  { short: "DEWA",      name: "Dubai Electricity & Water Authority", arabic: "كهرباء ومياه دبي", icon: Zap,         domain: "dewa.gov.ae", logo: dewaLogo },
   { short: "Etisalat",  name: "Etisalat by e&",          arabic: "اتصالات",                    icon: Zap,           domain: "etisalat.ae" },
   { short: "du",        name: "du Telecom",              arabic: "دو",                          icon: Zap,           domain: "du.ae" },
   { short: "RAK DED",   name: "Ras Al Khaimah Department of Economic Development", arabic: "دائرة التنمية الاقتصادية - رأس الخيمة", icon: Building2, domain: "ded.rak.ae", logo: rakDedLogo },
