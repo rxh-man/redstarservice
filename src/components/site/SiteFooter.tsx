@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { MapPin, Phone, Mail } from "lucide-react";
+import duaLogo from "@/assets/dua-logo.png";
 
 export function SiteFooter() {
   return (
@@ -7,12 +8,10 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-3">
-            <div className="grid h-11 w-11 place-items-center rounded-md bg-gold text-gold-foreground font-bold">T</div>
-            <div>
-              <div className="font-bold text-lg text-foreground">Tahleel</div>
-              <div className="arabic text-xs">تحليل</div>
-            </div>
+            <img src={duaLogo} alt="Dua Documents Service" className="h-14 w-auto object-contain" />
           </div>
+          <div className="mt-3 font-bold text-foreground">Dua Documents Service</div>
+          <div className="arabic text-xs">دعاء لخدمات المستندات</div>
           <p className="mt-4 text-sm text-muted-foreground max-w-xs">
             Multiple services under one roof — government transactions, typing, certification, translation and attestation.
           </p>
@@ -54,14 +53,14 @@ export function SiteFooter() {
             </li>
             <li className="flex items-start gap-2">
               <Mail className="h-4 w-4 text-gold mt-0.5 shrink-0" />
-              <span>info@tahleel.ae</span>
+              <span>info@duadocuments.ae</span>
             </li>
           </ul>
         </div>
       </div>
       <div className="border-t border-border">
         <div className="mx-auto max-w-7xl px-6 py-5 text-center text-xs text-muted-foreground">
-          © 2025 Tahleel Business Man Service Center. All rights reserved. | Al Sajaa, Sharjah, UAE
+          © 2025 Dua Documents Service. All rights reserved. | Al Sajaa, Sharjah, UAE
         </div>
       </div>
     </footer>

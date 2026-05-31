@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { Menu, X, MessageCircle } from "lucide-react";
+import duaLogo from "@/assets/dua-logo.png";
 
 const links = [
   { to: "/", label: "Home" },
@@ -17,10 +18,10 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 bg-card/95 backdrop-blur border-b-2 border-gold">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
         <Link to="/" className="flex items-center gap-3">
-          <div className="grid h-11 w-11 place-items-center rounded-md bg-primary text-primary-foreground font-bold text-lg">T</div>
-          <div className="leading-tight">
-            <div className="font-bold text-primary text-lg">Tahleel</div>
-            <div className="arabic text-xs">تحليل</div>
+          <img src={duaLogo} alt="Dua Documents Service" className="h-12 w-auto object-contain" />
+          <div className="leading-tight hidden sm:block">
+            <div className="font-bold text-primary text-base">Dua Documents Service</div>
+            <div className="arabic text-xs">دعاء لخدمات المستندات</div>
           </div>
         </Link>
 
