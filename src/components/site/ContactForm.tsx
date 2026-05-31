@@ -19,7 +19,7 @@ export function ContactForm() {
     const body = encodeURIComponent(
       `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\nService: ${data.service}\n\n${data.message}`
     );
-    window.location.href = `mailto:info@tahleel.ae?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:info@duadocuments.ae?subject=${subject}&body=${body}`;
   };
 
   const input = "w-full rounded-md border border-border bg-card px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary";

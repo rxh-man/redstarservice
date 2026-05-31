@@ -13,9 +13,9 @@ import { PARTNERS, PartnerEmblem } from "@/components/site/PartnerEmblem";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Tahleel Business Man Service Center — Sharjah" },
+      { title: "Dua Documents Service — Sharjah" },
       { name: "description", content: "One-stop center in Al Sajaa, Sharjah for Tasheel, Tawjeeh, Immigration, Emirates ID, typing, attestation and translation." },
-      { property: "og:title", content: "Tahleel Business Man Service Center" },
+      { property: "og:title", content: "Dua Documents Service" },
       { property: "og:description", content: "Multiple services under one roof — Sharjah, UAE." },
     ],
   }),
@@ -59,7 +59,7 @@ function Home() {
             <div className="text-center max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold">Why choose us?</h2>
               <p className="mt-3 text-muted-foreground">
-                Tahleel offers you prompt services, all in one place, thanks to our experienced team and advanced systems.
+                Dua Documents Service offers you prompt services, all in one place, thanks to our experienced team and advanced systems.
               </p>
             </div>
           </Reveal>
@@ -181,7 +181,7 @@ function Home() {
             {[
               { icon: MapPin, title: "Address", text: "Al Sajaa Industrial Area, Sharjah, UAE" },
               { icon: Phone, title: "Phone", text: "055 331 3325" },
-              { icon: Mail, title: "Email", text: "info@tahleel.ae" },
+              { icon: Mail, title: "Email", text: "info@duadocuments.ae" },
             ].map((c, i) => (
               <Reveal key={c.title} delay={i * 100}>
                 <div className="card-lift h-full bg-card rounded-xl p-6 text-center shadow-card border-l-[3px] border-l-gold">

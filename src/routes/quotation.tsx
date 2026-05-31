@@ -6,9 +6,9 @@ import { Star } from "lucide-react";
 export const Route = createFileRoute("/quotation")({
   head: () => ({
     meta: [
-      { title: "Request a Quotation — Tahleel" },
+      { title: "Request a Quotation — Dua Documents Service" },
       { name: "description", content: "Tell us what you need and we'll get back to you with a quote as soon as possible." },
-      { property: "og:title", content: "Request a Quotation — Tahleel" },
+      { property: "og:title", content: "Request a Quotation — Dua Documents Service" },
       { property: "og:description", content: "Customer interface for service quotations." },
     ],
   }),
@@ -30,7 +30,7 @@ function Quotation() {
     const body = encodeURIComponent(
       `Company: ${form.company}\nName: ${form.first} ${form.last}\nEmail: ${form.email}\nPhone: ${form.phone}\nServices: ${picked.join(", ")}\nRating: ${rating}/5\n\nNotes:\n${form.notes}`
     );
-    window.location.href = `mailto:info@tahleel.ae?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:info@duadocuments.ae?subject=${subject}&body=${body}`;
   };
 
   const input = "w-full rounded-md border border-border bg-card px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary";

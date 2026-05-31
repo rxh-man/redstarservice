@@ -7,9 +7,9 @@ import { MapPin, Phone, MessageCircle, Mail, FileDown } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Tahleel Business Man Service Center" },
-      { name: "description", content: "Reach Tahleel in Al Sajaa Industrial Area, Sharjah. Call, WhatsApp, email or visit our centre." },
-      { property: "og:title", content: "Contact Tahleel" },
+      { title: "Contact — Dua Documents Service" },
+      { name: "description", content: "Reach Dua Documents Service in Al Sajaa Industrial Area, Sharjah. Call, WhatsApp, email or visit our centre." },
+      { property: "og:title", content: "Contact Dua Documents Service" },
       { property: "og:description", content: "We're here to help with all your government transactions." },
     ],
   }),
@@ -30,7 +30,7 @@ function Contact() {
                   <li className="flex gap-3"><MapPin className="h-5 w-5 text-primary mt-0.5" /> Al Sajaa Industrial Area, Sharjah, UAE</li>
                   <li className="flex gap-3"><Phone className="h-5 w-5 text-primary mt-0.5" /> 055 331 3325</li>
                   <li className="flex gap-3"><MessageCircle className="h-5 w-5 text-primary mt-0.5" /> WhatsApp: <a href="https://wa.me/971553313325" className="text-primary hover:text-gold font-medium">055 331 3325</a></li>
-                  <li className="flex gap-3"><Mail className="h-5 w-5 text-primary mt-0.5" /> info@tahleel.ae</li>
+                  <li className="flex gap-3"><Mail className="h-5 w-5 text-primary mt-0.5" /> info@duadocuments.ae</li>
                 </ul>
               </div>
 

@@ -6,9 +6,9 @@ import { PARTNERS, PartnerEmblem } from "@/components/site/PartnerEmblem";
 export const Route = createFileRoute("/partners")({
   head: () => ({
     meta: [
-      { title: "Our Strategic Partners — Tahleel" },
+      { title: "Our Strategic Partners — Dua Documents Service" },
       { name: "description", content: "Trusted government and service partners across the UAE — MOHRE, Dubai Police, RTA, SEDD, GDRFA and more." },
-      { property: "og:title", content: "Strategic Partners — Tahleel" },
+      { property: "og:title", content: "Strategic Partners — Dua Documents Service" },
       { property: "og:description", content: "Government partners powering our services." },
     ],
   }),
