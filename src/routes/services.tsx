@@ -9,9 +9,9 @@ import {
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Our Services — Tahleel Business Man Service Center" },
+      { title: "Our Services — Dua Documents Service" },
       { name: "description", content: "Tasheel, Tawjeeh, Immigration, Emirates ID, Typing, SEDD, Municipality, Translation and more — all in one Sharjah center." },
-      { property: "og:title", content: "Our Services — Tahleel" },
+      { property: "og:title", content: "Our Services — Dua Documents Service" },
       { property: "og:description", content: "Money-saving and time-saving government & business services." },
     ],
   }),

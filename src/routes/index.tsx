@@ -9,13 +9,15 @@ import { ServiceFlipCard } from "@/components/site/ServiceFlipCard";
 import { ContactForm } from "@/components/site/ContactForm";
 import { Reveal } from "@/components/site/Reveal";
 import { PARTNERS, PartnerEmblem } from "@/components/site/PartnerEmblem";
+import skylineImg from "@/assets/sharjah-skyline.jpg";
+import officeImg from "@/assets/office-reception.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Tahleel Business Man Service Center — Sharjah" },
+      { title: "Dua Documents Service — Sharjah" },
       { name: "description", content: "One-stop center in Al Sajaa, Sharjah for Tasheel, Tawjeeh, Immigration, Emirates ID, typing, attestation and translation." },
-      { property: "og:title", content: "Tahleel Business Man Service Center" },
+      { property: "og:title", content: "Dua Documents Service" },
       { property: "og:description", content: "Multiple services under one roof — Sharjah, UAE." },
     ],
   }),
@@ -59,7 +61,7 @@ function Home() {
             <div className="text-center max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold">Why choose us?</h2>
               <p className="mt-3 text-muted-foreground">
-                Tahleel offers you prompt services, all in one place, thanks to our experienced team and advanced systems.
+                Dua Documents Service offers you prompt services, all in one place, thanks to our experienced team and advanced systems.
               </p>
             </div>
           </Reveal>
@@ -74,6 +76,48 @@ function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* About strip with office image */}
+      <section className="py-16 bg-surface-blue">
+        <div className="mx-auto max-w-7xl px-6 grid gap-10 lg:grid-cols-2 items-center">
+          <Reveal>
+            <div className="relative rounded-2xl overflow-hidden shadow-card border border-border">
+              <img
+                src={officeImg}
+                alt="Dua Documents Service centre interior in Sharjah"
+                loading="lazy"
+                width={1280}
+                height={896}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-4 left-4 rounded-md bg-card/90 backdrop-blur border border-gold/30 px-4 py-2">
+                <div className="text-[10px] uppercase tracking-widest text-gold font-semibold">Our Centre</div>
+                <div className="text-sm font-semibold">Al Sajaa, Sharjah</div>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={100}>
+            <div>
+              <div className="text-[11px] uppercase tracking-[0.2em] text-gold font-semibold">About Us</div>
+              <h2 className="mt-2 text-3xl md:text-4xl font-bold">A trusted partner for government services</h2>
+              <p className="mt-4 text-muted-foreground">
+                Dua Documents Service is a professional one-stop centre in Al Sajaa, Sharjah, helping
+                individuals and businesses complete official transactions quickly and accurately.
+                From Tasheel and Tawjeeh to Immigration, Emirates ID, SEDD and Municipality work —
+                our multilingual team handles it end-to-end.
+              </p>
+              <ul className="mt-6 space-y-2 text-sm">
+                <li className="flex gap-2"><span className="text-gold">✓</span> Authorized handling of government transactions</li>
+                <li className="flex gap-2"><span className="text-gold">✓</span> Typing, attestation and translation under one roof</li>
+                <li className="flex gap-2"><span className="text-gold">✓</span> Friendly bilingual support in Arabic & English</li>
+              </ul>
+              <Link to="/services" className="mt-7 inline-flex items-center gap-2 rounded-md bg-gold text-gold-foreground px-5 py-2.5 text-sm font-semibold hover:opacity-90 transition">
+                Explore services <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -170,6 +214,26 @@ function Home() {
 
       {/* Contact section */}
       <section className="py-20">
+        <div className="mx-auto max-w-7xl px-6 mb-12">
+          <div className="relative rounded-2xl overflow-hidden h-56 md:h-72 shadow-card">
+            <img
+              src={skylineImg}
+              alt="Sharjah skyline at golden hour"
+              loading="lazy"
+              width={1280}
+              height={800}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/60 to-transparent" />
+            <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-14 max-w-xl">
+              <div className="text-[11px] uppercase tracking-[0.2em] text-gold font-semibold">Proudly serving the UAE</div>
+              <h3 className="mt-2 text-2xl md:text-3xl font-bold text-primary-foreground">Sharjah · Dubai · All Emirates</h3>
+              <p className="mt-2 text-sm text-primary-foreground/85">
+                Headquartered in Al Sajaa Industrial Area, we serve clients across the UAE with full-service documentation support.
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <div className="text-center max-w-2xl mx-auto">
@@ -181,7 +245,7 @@ function Home() {
             {[
               { icon: MapPin, title: "Address", text: "Al Sajaa Industrial Area, Sharjah, UAE" },
               { icon: Phone, title: "Phone", text: "055 331 3325" },
-              { icon: Mail, title: "Email", text: "info@tahleel.ae" },
+              { icon: Mail, title: "Email", text: "info@duadocuments.ae" },
             ].map((c, i) => (
               <Reveal key={c.title} delay={i * 100}>
                 <div className="card-lift h-full bg-card rounded-xl p-6 text-center shadow-card border-l-[3px] border-l-gold">

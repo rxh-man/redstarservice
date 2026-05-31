@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { MessageCircle, MapPin, ShieldCheck, Clock, Users, ArrowRight } from "lucide-react";
+import officeImg from "@/assets/office-reception.jpg";
+import duaLogo from "@/assets/dua-logo.png";
 
 const tags = [
   "Tasheel · Tawjeeh · Immigration",
@@ -44,7 +46,7 @@ export function HeroSlider() {
             </h1>
 
             <p className="mt-5 text-lg text-muted-foreground max-w-xl">
-              Tahleel is a one-stop service centre for government transactions, typing,
+              Dua Documents Service is a one-stop service centre for government transactions, typing,
               certification, translation and attestation across Sharjah and the UAE.
             </p>
 
@@ -91,19 +93,28 @@ export function HeroSlider() {
             </div>
           </div>
 
-          {/* Right card — official notice style */}
+          {/* Right card — official notice style with image */}
           <div className="lg:col-span-5">
             <div className="relative bg-card border border-border rounded-2xl shadow-card overflow-hidden">
-              <div className="bg-gradient-gold px-6 py-4 flex items-center justify-between">
-                <div className="leading-tight">
-                  <div className="text-[11px] uppercase tracking-widest text-gold-foreground/80">
-                    Service Centre
+              <div className="relative h-48 overflow-hidden">
+                <img
+                  src={officeImg}
+                  alt="Dua Documents Service centre reception"
+                  width={1280}
+                  height={896}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2 rounded-md bg-card/90 backdrop-blur px-3 py-2 border border-gold/30">
+                    <img src={duaLogo} alt="" className="h-8 w-auto object-contain" />
+                    <div className="leading-tight">
+                      <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Service Centre</div>
+                      <div className="text-sm font-semibold text-foreground">Dua · دعاء</div>
+                    </div>
                   </div>
-                  <div className="text-lg font-semibold text-gold-foreground">
-                    Tahleel · تحليل
-                  </div>
+                  <ShieldCheck className="h-6 w-6 text-gold drop-shadow" />
                 </div>
-                <ShieldCheck className="h-7 w-7 text-gold-foreground" />
               </div>
 
               <div className="p-6 space-y-5">
