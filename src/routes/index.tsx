@@ -4,7 +4,7 @@ import {
   FileText, BadgeCheck, Plane, IdCard, Stethoscope, Building2, Landmark, Keyboard,
   MapPin, Phone, Mail,
 } from "lucide-react";
-import { HeroSlider } from "@/components/site/HeroSlider";
+import { ScrollStory, StoryIntro } from "@/components/site/ScrollStory";
 import { ServiceFlipCard } from "@/components/site/ServiceFlipCard";
 import { ContactForm } from "@/components/site/ContactForm";
 import { Reveal } from "@/components/site/Reveal";
@@ -56,7 +56,8 @@ function Home() {
 
   return (
     <>
-      <HeroSlider />
+      <StoryIntro />
+      <ScrollStory />
 
       {/* Why */}
       <section className="py-24">
