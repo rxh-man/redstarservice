@@ -14,6 +14,7 @@ import { Route as QuotationRouteImport } from './routes/quotation'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -40,6 +41,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/partners': typeof PartnersRoute
   '/quotation': typeof QuotationRoute
   '/services': typeof ServicesRoute
+  '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/partners': typeof PartnersRoute
   '/quotation': typeof QuotationRoute
   '/services': typeof ServicesRoute
+  '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,27 @@ export interface FileRoutesById {
   '/partners': typeof PartnersRoute
   '/quotation': typeof QuotationRoute
   '/services': typeof ServicesRoute
+  '/api/chat': typeof ApiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contact' | '/partners' | '/quotation' | '/services'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/partners'
+    | '/quotation'
+    | '/services'
+    | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/partners' | '/quotation' | '/services'
-  id: '__root__' | '/' | '/contact' | '/partners' | '/quotation' | '/services'
+  to: '/' | '/contact' | '/partners' | '/quotation' | '/services' | '/api/chat'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/partners'
+    | '/quotation'
+    | '/services'
+    | '/api/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +99,7 @@ export interface RootRouteChildren {
   PartnersRoute: typeof PartnersRoute
   QuotationRoute: typeof QuotationRoute
   ServicesRoute: typeof ServicesRoute
+  ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +139,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +155,7 @@ const rootRouteChildren: RootRouteChildren = {
   PartnersRoute: PartnersRoute,
   QuotationRoute: QuotationRoute,
   ServicesRoute: ServicesRoute,
+  ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
