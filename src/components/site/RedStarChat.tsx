@@ -30,6 +30,12 @@ export function RedStarChat() {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, busy, open]);
 
+  useEffect(() => {
+    const handler = () => setOpen(true);
+    window.addEventListener("open-red-star-chat", handler);
+    return () => window.removeEventListener("open-red-star-chat", handler);
+  }, []);
+
   const greeting = t(
     "Hello! I'm Red Star AI Support. Ask me about any government service, required documents, or process.",
     "مرحباً! أنا مساعد الذكاء الاصطناعي من ريد ستار. اسألني عن أي خدمة حكومية أو المستندات المطلوبة أو الإجراءات.",
