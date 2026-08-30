@@ -113,7 +113,7 @@ function LoginCard() {
 }
 
 function PortalShell() {
-  const { loading, session, roles, fullName, isAdmin, isAccountant, isTypist } = usePortal();
+  const { loading, session, roles, fullName, avatarUrl, isAdmin, isAccountant, isTypist } = usePortal();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -211,12 +211,28 @@ function PortalShell() {
           </nav>
 
           <div className="mt-8 rounded-xl border border-border p-3">
-            <div className="truncate text-sm font-medium">{fullName || session.user.email}</div>
-            <div className="truncate text-xs text-muted-foreground">{session.user.email}</div>
+            <div className="flex items-center gap-3">
+              {avatarUrl ? (
+                <img
+                  src={avatarUrl}
+                  alt={fullName || "Profile photo"}
+                  className="h-10 w-10 rounded-full border border-border object-cover"
+                />
+              ) : (
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-muted text-xs font-semibold text-muted-foreground">
+                  {(fullName || session.user.email || "?").slice(0, 2).toUpperCase()}
+                </div>
+              )}
+              <div className="min-w-0">
+                <div className="truncate text-sm font-medium">{fullName || session.user.email}</div>
+                <div className="truncate text-xs text-muted-foreground">{session.user.email}</div>
+              </div>
+            </div>
             <Button variant="outline" size="sm" className="mt-3 w-full" onClick={signOut}>
               <LogOut className="mr-2 h-3.5 w-3.5" /> Sign out
             </Button>
           </div>
+
         </aside>
 
         <div className="min-w-0 flex-1">
