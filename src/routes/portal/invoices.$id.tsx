@@ -313,12 +313,18 @@ function InvoiceDetail() {
                     {AED(Number(it.qty) * Number(it.unit_price) + Number(it.govt_fee))}
                   </td>
                   <td className="px-2 py-3 text-right print:hidden">
-                    {isAccountant ? (
-                      <button onClick={() => delItem.mutate(it.id)} aria-label="Remove line">
+                    {isAccountant && !locked ? (
+                      <button
+                        onClick={() => {
+                          if (confirm("Remove this line item?")) delItem.mutate(it.id);
+                        }}
+                        aria-label="Remove line"
+                      >
                         <Trash2 className="h-3.5 w-3.5 text-destructive" />
                       </button>
                     ) : null}
                   </td>
+
                 </tr>
               ))}
               {data.items.length === 0 ? (
