@@ -17,7 +17,7 @@ async function admin() {
 export async function staffDirectory() {
   const db = await admin();
   const [{ data: profiles }, { data: roles }, users] = await Promise.all([
-    db.from("profiles").select("id, full_name, email, phone, job_title, active, created_at"),
+    db.from("profiles").select("id, full_name, email, phone, job_title, active, avatar_path, created_at"),
     db.from("user_roles").select("user_id, role"),
     db.auth.admin.listUsers({ page: 1, perPage: 200 }),
   ]);
@@ -25,14 +25,58 @@ export async function staffDirectory() {
   const roleByUser = new Map<string, Role>();
   for (const r of roles ?? []) roleByUser.set(r.user_id, r.role as Role);
 
-  return (profiles ?? []).map((p) => {
-    const authUser = users.data.users.find((u) => u.id === p.id);
-    return {
-      ...p,
-      role: roleByUser.get(p.id) ?? null,
-      last_sign_in_at: authUser?.last_sign_in_at ?? null,
-    };
-  });
+  return Promise.all(
+    (profiles ?? []).map(async (p) => {
+      const authUser = users.data.users.find((u) => u.id === p.id);
+      let avatar_url: string | null = null;
+      if (p.avatar_path) {
+        const { data: signed } = await db.storage.from("avatars").createSignedUrl(p.avatar_path, 60 * 60 * 8);
+        avatar_url = signed?.signedUrl ?? null;
+      }
+      return {
+        ...p,
+        role: roleByUser.get(p.id) ?? null,
+        last_sign_in_at: authUser?.last_sign_in_at ?? null,
+        avatar_url,
+      };
+    }),
+  );
+}
+
+export async function updateStaffProfile(input: {
+  user_id: string;
+  full_name?: string;
+  job_title?: string | null;
+  phone?: string | null;
+  email?: string;
+  active?: boolean;
+  avatar_path?: string | null;
+}) {
+  const db = await admin();
+  const patch: Record<string, unknown> = {};
+  if (input.full_name !== undefined) patch['full_name'] = input.full_name;
+  if (input.job_title !== undefined) patch['job_title'] = input.job_title || null;
+  if (input.phone !== undefined) patch['phone'] = input.phone || null;
+  if (input.email !== undefined) patch['email'] = input.email;
+  if (input.active !== undefined) patch['active'] = input.active;
+  if (input.avatar_path !== undefined) patch['avatar_path'] = input.avatar_path;
+
+  if (Object.keys(patch).length) {
+    const { error } = await db.from("profiles").update(patch).eq("id", input.user_id);
+    if (error) throw new Error(error.message);
+  }
+
+  if (input.email) {
+    const { error } = await db.auth.admin.updateUserById(input.user_id, {
+      email: input.email,
+      email_confirm: true,
+    });
+    if (error) throw new Error(error.message);
+  }
+  if (input.full_name) {
+    await db.auth.admin.updateUserById(input.user_id, { user_metadata: { full_name: input.full_name } });
+  }
+  return { ok: true };
 }
 
 export async function addStaff(input: {
