@@ -42,8 +42,8 @@ export const Route = createFileRoute("/portal")({
   }),
   component: () => (
     <PortalProvider>
+      <WelcomeBanner />
       <PortalShell />
-    </PortalProvider>
   ),
 });
 
