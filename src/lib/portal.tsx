@@ -76,12 +76,14 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
       loading,
       roles,
       fullName,
+      avatarUrl,
       isAdmin: roles.includes("admin"),
       isAccountant: roles.includes("admin") || roles.includes("accountant"),
       isTypist: roles.includes("admin") || roles.includes("typist"),
       refresh: async () => load(session?.user.id ?? null),
     }),
-    [session, loading, roles, fullName, load],
+    [session, loading, roles, fullName, avatarUrl, load],
+
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
