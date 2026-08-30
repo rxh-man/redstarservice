@@ -356,30 +356,73 @@ function InvoiceDetail() {
           </DialogHeader>
           <div className="space-y-3">
             <div className="space-y-1.5">
-              <Label htmlFor="svc">Pick from service catalogue</Label>
-              <select
+              <Label htmlFor="svc">Search the service catalogue ({data.services.length.toLocaleString()} services)</Label>
+              <Input
                 id="svc"
-                className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
-                onChange={(e) => {
-                  const s = data.services.find((x) => x.id === e.target.value);
-                  if (s)
-                    setItem({
-                      description: s.name,
-                      qty: "1",
-                      unit_price: String(s.service_fee),
-                      govt_fee: String(s.govt_fee),
-                      taxable: true,
-                    });
-                }}
-              >
-                <option value="">— custom line —</option>
-                {data.services.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.name}
-                  </option>
-                ))}
-              </select>
+                placeholder="Type a service code or name, e.g. 110021 or Emirates ID…"
+                value={svcQuery}
+                onChange={(e) => setSvcQuery(e.target.value)}
+              />
+              {svcQuery.trim().length >= 2 ? (
+                <div className="max-h-56 overflow-y-auto rounded-md border border-border">
+                  {data.services
+                    .filter((s) => {
+                      const t = svcQuery.trim().toLowerCase();
+                      return (
+                        s.name.toLowerCase().includes(t) ||
+                        (s.code ?? "").toLowerCase().includes(t) ||
+                        (s.name_ar ?? "").includes(svcQuery.trim())
+                      );
+                    })
+                    .slice(0, 40)
+                    .map((s) => (
+                      <button
+                        key={s.id}
+                        type="button"
+                        className={`flex w-full items-start justify-between gap-3 border-b border-border px-3 py-2 text-left text-xs last:border-0 hover:bg-muted ${
+                          item.service_id === s.id ? "bg-muted" : ""
+                        }`}
+                        onClick={() => {
+                          setItem({
+                            service_id: s.id,
+                            description: s.name,
+                            description_ar: s.name_ar ?? "",
+                            qty: "1",
+                            unit_price: String(s.service_fee),
+                            govt_fee: String(s.govt_fee),
+                            taxable: true,
+                          });
+                          setSvcQuery("");
+                        }}
+                      >
+                        <span className="min-w-0">
+                          <span className="block font-medium">{s.name}</span>
+                          <span className="block text-muted-foreground">
+                            {s.code} · {s.category ?? "—"}
+                          </span>
+                        </span>
+                        <span className="whitespace-nowrap text-muted-foreground">
+                          {AED(s.service_fee)} + {AED(s.govt_fee)}
+                        </span>
+                      </button>
+                    ))}
+                </div>
+              ) : (
+                <p className="text-xs text-muted-foreground">
+                  Type at least 2 characters, or leave blank and enter a custom line below.
+                </p>
+              )}
             </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="desc_ar">Description (Arabic)</Label>
+              <Input
+                id="desc_ar"
+                className="arabic"
+                value={item.description_ar}
+                onChange={(e) => setItem({ ...item, description_ar: e.target.value })}
+              />
+            </div>
+
             <div className="space-y-1.5">
               <Label htmlFor="desc">Description</Label>
               <Textarea
