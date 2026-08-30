@@ -26,7 +26,17 @@ function InvoiceDetail() {
   const qc = useQueryClient();
   const [itemOpen, setItemOpen] = useState(false);
   const [payOpen, setPayOpen] = useState(false);
-  const [item, setItem] = useState({ description: "", qty: "1", unit_price: "0", govt_fee: "0", taxable: true });
+  const emptyItem = {
+    service_id: "" as string,
+    description: "",
+    description_ar: "",
+    qty: "1",
+    unit_price: "0",
+    govt_fee: "0",
+    taxable: true,
+  };
+  const [item, setItem] = useState({ ...emptyItem });
+
   const [pay, setPay] = useState({ amount: "", method: "cash", reference: "", received_on: new Date().toISOString().slice(0, 10) });
 
   const [svcQuery, setSvcQuery] = useState("");
