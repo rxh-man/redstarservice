@@ -16,6 +16,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as PortalRouteRouteImport } from './routes/portal/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortalIndexRouteImport } from './routes/portal/index'
+import { Route as PortalStaffRouteImport } from './routes/portal/staff'
 import { Route as PortalServicesRouteImport } from './routes/portal/services'
 import { Route as PortalReceiptsRouteImport } from './routes/portal/receipts'
 import { Route as PortalJobsRouteImport } from './routes/portal/jobs'
@@ -58,6 +59,11 @@ const IndexRoute = IndexRouteImport.update({
 const PortalIndexRoute = PortalIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalStaffRoute = PortalStaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
   getParentRoute: () => PortalRouteRoute,
 } as any)
 const PortalServicesRoute = PortalServicesRouteImport.update({
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/services': typeof PortalServicesRoute
+  '/portal/staff': typeof PortalStaffRoute
   '/portal/': typeof PortalIndexRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
   '/portal/invoices/': typeof PortalInvoicesIndexRoute
@@ -130,6 +137,7 @@ export interface FileRoutesByTo {
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/services': typeof PortalServicesRoute
+  '/portal/staff': typeof PortalStaffRoute
   '/portal': typeof PortalIndexRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
   '/portal/invoices': typeof PortalInvoicesIndexRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/services': typeof PortalServicesRoute
+  '/portal/staff': typeof PortalStaffRoute
   '/portal/': typeof PortalIndexRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
   '/portal/invoices/': typeof PortalInvoicesIndexRoute
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
     | '/portal/jobs'
     | '/portal/receipts'
     | '/portal/services'
+    | '/portal/staff'
     | '/portal/'
     | '/portal/invoices/$id'
     | '/portal/invoices/'
@@ -183,6 +193,7 @@ export interface FileRouteTypes {
     | '/portal/jobs'
     | '/portal/receipts'
     | '/portal/services'
+    | '/portal/staff'
     | '/portal'
     | '/portal/invoices/$id'
     | '/portal/invoices'
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/portal/jobs'
     | '/portal/receipts'
     | '/portal/services'
+    | '/portal/staff'
     | '/portal/'
     | '/portal/invoices/$id'
     | '/portal/invoices/'
@@ -264,6 +276,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/portal/'
       preLoaderRoute: typeof PortalIndexRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
+    '/portal/staff': {
+      id: '/portal/staff'
+      path: '/staff'
+      fullPath: '/portal/staff'
+      preLoaderRoute: typeof PortalStaffRouteImport
       parentRoute: typeof PortalRouteRoute
     }
     '/portal/services': {
@@ -331,6 +350,7 @@ interface PortalRouteRouteChildren {
   PortalJobsRoute: typeof PortalJobsRoute
   PortalReceiptsRoute: typeof PortalReceiptsRoute
   PortalServicesRoute: typeof PortalServicesRoute
+  PortalStaffRoute: typeof PortalStaffRoute
   PortalIndexRoute: typeof PortalIndexRoute
   PortalInvoicesIdRoute: typeof PortalInvoicesIdRoute
   PortalInvoicesIndexRoute: typeof PortalInvoicesIndexRoute
@@ -342,6 +362,7 @@ const PortalRouteRouteChildren: PortalRouteRouteChildren = {
   PortalJobsRoute: PortalJobsRoute,
   PortalReceiptsRoute: PortalReceiptsRoute,
   PortalServicesRoute: PortalServicesRoute,
+  PortalStaffRoute: PortalStaffRoute,
   PortalIndexRoute: PortalIndexRoute,
   PortalInvoicesIdRoute: PortalInvoicesIdRoute,
   PortalInvoicesIndexRoute: PortalInvoicesIndexRoute,
