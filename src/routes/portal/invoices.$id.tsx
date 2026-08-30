@@ -130,11 +130,15 @@ function InvoiceDetail() {
 
   const addPayment = useMutation({
     mutationFn: async () => {
+      const amount = Number(pay.amount);
+      const due = Math.round((Number(data?.invoice.total ?? 0) - Number(data?.invoice.paid_amount ?? 0)) * 100) / 100;
+      if (!Number.isFinite(amount) || amount <= 0) throw new Error("Enter a payment amount greater than zero");
+      if (amount > due + 0.01) throw new Error(`Payment cannot exceed the outstanding balance of ${AED(due)}`);
       const { error } = await supabase.from("receipts").insert({
         receipt_no: "",
         invoice_id: id,
         customer_id: data?.invoice.customer_id ?? null,
-        amount: Number(pay.amount) || 0,
+        amount,
         method: pay.method,
         reference: pay.reference || null,
         received_on: pay.received_on,
@@ -142,6 +146,7 @@ function InvoiceDetail() {
       } as never);
       if (error) throw error;
     },
+
     onSuccess: () => {
       setPayOpen(false);
       setPay({ amount: "", method: "cash", reference: "", received_on: new Date().toISOString().slice(0, 10) });
