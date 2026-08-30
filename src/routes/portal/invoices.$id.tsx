@@ -29,17 +29,37 @@ function InvoiceDetail() {
   const [item, setItem] = useState({ description: "", qty: "1", unit_price: "0", govt_fee: "0", taxable: true });
   const [pay, setPay] = useState({ amount: "", method: "cash", reference: "", received_on: new Date().toISOString().slice(0, 10) });
 
+  const [svcQuery, setSvcQuery] = useState("");
+
   const { data, isLoading } = useQuery({
     queryKey: ["portal", "invoice", id],
     queryFn: async () => {
-      const [inv, items, receipts, settings, services] = await Promise.all([
+      const [inv, items, receipts, settings] = await Promise.all([
         supabase.from("invoices").select("*").eq("id", id).single(),
         supabase.from("invoice_items").select("*").eq("invoice_id", id).order("sort_order"),
         supabase.from("receipts").select("*").eq("invoice_id", id).order("received_on"),
         supabase.from("settings").select("*").maybeSingle(),
-        supabase.from("services").select("id, name, name_ar, service_fee, govt_fee").eq("active", true).order("name"),
       ]);
       if (inv.error) throw inv.error;
+      const services: {
+        id: string;
+        code: string | null;
+        name: string;
+        name_ar: string | null;
+        category: string | null;
+        service_fee: number;
+        govt_fee: number;
+      }[] = [];
+      for (let from = 0; ; from += 1000) {
+        const { data: chunk } = await supabase
+          .from("services")
+          .select("id, code, name, name_ar, category, service_fee, govt_fee")
+          .eq("active", true)
+          .order("name")
+          .range(from, from + 999);
+        services.push(...((chunk ?? []) as typeof services));
+        if (!chunk || chunk.length < 1000) break;
+      }
       let customer = null;
       if (inv.data.customer_id) {
         const { data: c } = await supabase.from("customers").select("*").eq("id", inv.data.customer_id).maybeSingle();
@@ -50,11 +70,12 @@ function InvoiceDetail() {
         items: items.data ?? [],
         receipts: receipts.data ?? [],
         settings: settings.data,
-        services: services.data ?? [],
+        services,
         customer,
       };
     },
   });
+
 
   const addItem = useMutation({
     mutationFn: async () => {
