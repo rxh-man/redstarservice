@@ -62,8 +62,10 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
       if (alive) setLoading(false);
     });
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, next) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, next) => {
       setSession(next ?? null);
+      if (event === "SIGNED_IN") setJustSignedIn(true);
+      if (event === "SIGNED_OUT") setJustSignedIn(false);
       void load(next?.user.id ?? null);
     });
 
