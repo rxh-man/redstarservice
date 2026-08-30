@@ -13,6 +13,8 @@ type PortalCtx = {
   isAdmin: boolean;
   isAccountant: boolean;
   isTypist: boolean;
+  justSignedIn: boolean;
+  dismissWelcome: () => void;
   refresh: () => Promise<void>;
 };
 
