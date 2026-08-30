@@ -9,6 +9,7 @@ type PortalCtx = {
   loading: boolean;
   roles: Role[];
   fullName: string;
+  avatarUrl: string | null;
   isAdmin: boolean;
   isAccountant: boolean;
   isTypist: boolean;
@@ -21,21 +22,32 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [roles, setRoles] = useState<Role[]>([]);
   const [fullName, setFullName] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   const load = useCallback(async (uid: string | null) => {
     if (!uid) {
       setRoles([]);
       setFullName("");
+      setAvatarUrl(null);
       return;
     }
     const [{ data: roleRows }, { data: profile }] = await Promise.all([
       supabase.from("user_roles").select("role").eq("user_id", uid),
-      supabase.from("profiles").select("full_name").eq("id", uid).maybeSingle(),
+      supabase.from("profiles").select("full_name, avatar_path").eq("id", uid).maybeSingle(),
     ]);
     setRoles(((roleRows ?? []) as { role: Role }[]).map((r) => r.role));
     setFullName(profile?.full_name ?? "");
+    if (profile?.avatar_path) {
+      const { data: signed } = await supabase.storage
+        .from("avatars")
+        .createSignedUrl(profile.avatar_path, 60 * 60 * 8);
+      setAvatarUrl(signed?.signedUrl ?? null);
+    } else {
+      setAvatarUrl(null);
+    }
   }, []);
+
 
   useEffect(() => {
     let alive = true;
