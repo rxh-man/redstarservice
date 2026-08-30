@@ -314,7 +314,9 @@ export type Database = {
         Row: {
           active: boolean
           category: string | null
+          code: string | null
           created_at: string
+          govt_bank: string | null
           govt_fee: number
           id: string
           name: string
@@ -325,7 +327,9 @@ export type Database = {
         Insert: {
           active?: boolean
           category?: string | null
+          code?: string | null
           created_at?: string
+          govt_bank?: string | null
           govt_fee?: number
           id?: string
           name: string
@@ -336,7 +340,9 @@ export type Database = {
         Update: {
           active?: boolean
           category?: string | null
+          code?: string | null
           created_at?: string
+          govt_bank?: string | null
           govt_fee?: number
           id?: string
           name?: string
