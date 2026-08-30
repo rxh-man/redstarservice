@@ -51,3 +51,20 @@ export const resetStaffPassword = createServerFn({ method: "POST" })
     await assertAdmin(context.supabase, context.userId);
     return setStaffPassword(data.user_id, data.password);
   });
+
+export const updateStaffDetails = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: {
+    user_id: string;
+    full_name?: string;
+    job_title?: string | null;
+    phone?: string | null;
+    email?: string;
+    active?: boolean;
+    avatar_path?: string | null;
+  }) => input)
+  .handler(async ({ data, context }) => {
+    const { assertAdmin, updateStaffProfile } = await import("./staff.server");
+    await assertAdmin(context.supabase, context.userId);
+    return updateStaffProfile(data);
+  });
