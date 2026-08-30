@@ -157,3 +157,40 @@ export function Panel({ children, className = "" }: { children: React.ReactNode;
     <div className={`rounded-2xl border border-border bg-card shadow-card ${className}`}>{children}</div>
   );
 }
+
+export function WelcomeBanner() {
+  const { justSignedIn, dismissWelcome, fullName, avatarUrl, session } = usePortal();
+
+  useEffect(() => {
+    if (!justSignedIn) return;
+    const t = setTimeout(dismissWelcome, 3000);
+    return () => clearTimeout(t);
+  }, [justSignedIn, dismissWelcome]);
+
+  if (!justSignedIn || !session) return null;
+
+  const name = fullName?.trim() || session.user.email || "there";
+  const initial = name.charAt(0).toUpperCase();
+
+  return (
+    <div className="pointer-events-none fixed inset-x-0 top-5 z-[100] flex justify-center px-4">
+      <div className="flex items-center gap-3 rounded-full border border-border bg-card/95 px-4 py-2.5 shadow-lift backdrop-blur animate-in fade-in slide-in-from-top-2">
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt={name}
+            className="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-primary/40"
+          />
+        ) : (
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary ring-2 ring-primary/30">
+            {initial}
+          </span>
+        )}
+        <div className="leading-tight">
+          <p className="text-sm font-semibold">Welcome, {name}</p>
+          <p className="text-[11px] text-muted-foreground">Signed in to Red Star Services ERP</p>
+        </div>
+      </div>
+    </div>
+  );
+}
