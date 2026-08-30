@@ -113,7 +113,7 @@ function LoginCard() {
 }
 
 function PortalShell() {
-  const { loading, session, roles, fullName, isAdmin, isAccountant, isTypist } = usePortal();
+  const { loading, session, roles, fullName, avatarUrl, isAdmin, isAccountant, isTypist } = usePortal();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
