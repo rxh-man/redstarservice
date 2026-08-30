@@ -13,6 +13,8 @@ import {
   LogOut,
   Loader2,
   Menu,
+  BarChart3,
+
 } from "lucide-react";
 import logo from "@/assets/red-star-logo.png";
 import { supabase } from "@/integrations/supabase/client";
