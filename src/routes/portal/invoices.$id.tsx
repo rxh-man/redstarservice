@@ -166,7 +166,9 @@ function InvoiceDetail() {
   if (isLoading || !data) return <p className="text-sm text-muted-foreground">Loading invoice…</p>;
 
   const inv = data.invoice;
-  const balance = Number(inv.total) - Number(inv.paid_amount);
+  const balance = Math.round((Number(inv.total) - Number(inv.paid_amount)) * 100) / 100;
+  const locked = inv.status === "cancelled" || inv.status === "paid";
+  const canCollect = inv.status !== "cancelled" && balance > 0;
 
   return (
     <div>
@@ -179,19 +181,41 @@ function InvoiceDetail() {
         <div className="flex flex-wrap gap-2">
           {isAccountant ? (
             <>
-              <Button size="sm" variant="outline" onClick={() => setItemOpen(true)}>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={locked}
+                title={locked ? "Paid and cancelled invoices are locked" : undefined}
+                onClick={() => setItemOpen(true)}
+              >
                 <Plus className="mr-2 h-4 w-4" /> Line item
               </Button>
-              <Button size="sm" variant="outline" onClick={() => setPayOpen(true)}>
+              <Button size="sm" variant="outline" disabled={!canCollect} onClick={() => setPayOpen(true)}>
                 <BadgeCheck className="mr-2 h-4 w-4" /> Record payment
               </Button>
               {inv.status === "draft" ? (
-                <Button size="sm" variant="outline" onClick={() => setStatus.mutate("sent")}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={data.items.length === 0}
+                  title={data.items.length === 0 ? "Add at least one line item first" : undefined}
+                  onClick={() => setStatus.mutate("sent")}
+                >
                   Mark as sent
                 </Button>
               ) : null}
               {inv.status !== "cancelled" && isAdmin ? (
-                <Button size="sm" variant="outline" onClick={() => setStatus.mutate("cancelled")}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    if (Number(inv.paid_amount) > 0) {
+                      toast.error("Delete the receipts on this invoice before cancelling it.");
+                      return;
+                    }
+                    if (confirm(`Cancel invoice ${inv.invoice_no}?`)) setStatus.mutate("cancelled");
+                  }}
+                >
                   Cancel invoice
                 </Button>
               ) : null}
@@ -202,6 +226,13 @@ function InvoiceDetail() {
           </Button>
         </div>
       </div>
+
+      {locked ? (
+        <p className="mb-4 rounded-lg border border-border bg-muted px-4 py-2 text-xs text-muted-foreground print:hidden">
+          This invoice is {inv.status} and locked for editing. Line items can no longer be changed.
+        </p>
+      ) : null}
+
 
       <Panel className="p-6 md:p-10 print:border-0 print:shadow-none">
         <div className="flex flex-wrap items-start justify-between gap-6 border-b border-border pb-6">
