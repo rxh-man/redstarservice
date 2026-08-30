@@ -62,7 +62,7 @@ export async function updateStaffProfile(input: {
   if (input.avatar_path !== undefined) patch['avatar_path'] = input.avatar_path;
 
   if (Object.keys(patch).length) {
-    const { error } = await db.from("profiles").update(patch).eq("id", input.user_id);
+    const { error } = await db.from("profiles").update(patch as never).eq("id", input.user_id);
     if (error) throw new Error(error.message);
   }
 
