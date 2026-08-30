@@ -85,9 +85,11 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
       isAdmin: roles.includes("admin"),
       isAccountant: roles.includes("admin") || roles.includes("accountant"),
       isTypist: roles.includes("admin") || roles.includes("typist"),
+      justSignedIn,
+      dismissWelcome: () => setJustSignedIn(false),
       refresh: async () => load(session?.user.id ?? null),
     }),
-    [session, loading, roles, fullName, avatarUrl, load],
+    [session, loading, roles, fullName, avatarUrl, justSignedIn, load],
 
   );
 
