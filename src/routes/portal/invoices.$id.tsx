@@ -89,12 +89,20 @@ function InvoiceDetail() {
 
   const addItem = useMutation({
     mutationFn: async () => {
+      const qty = Number(item.qty);
+      if (!Number.isFinite(qty) || qty <= 0) throw new Error("Quantity must be greater than zero");
+      const fee = Number(item.unit_price);
+      const govt = Number(item.govt_fee);
+      if (!Number.isFinite(fee) || fee < 0) throw new Error("Service fee must be a positive amount");
+      if (!Number.isFinite(govt) || govt < 0) throw new Error("Government fee must be a positive amount");
       const { error } = await supabase.from("invoice_items").insert({
         invoice_id: id,
-        description: item.description,
-        qty: Number(item.qty) || 1,
-        unit_price: Number(item.unit_price) || 0,
-        govt_fee: Number(item.govt_fee) || 0,
+        service_id: item.service_id || null,
+        description: item.description.trim(),
+        description_ar: item.description_ar.trim() || null,
+        qty,
+        unit_price: fee,
+        govt_fee: govt,
         taxable: item.taxable,
         sort_order: (data?.items.length ?? 0) + 1,
       } as never);
@@ -102,12 +110,14 @@ function InvoiceDetail() {
     },
     onSuccess: () => {
       setItemOpen(false);
-      setItem({ description: "", qty: "1", unit_price: "0", govt_fee: "0", taxable: true });
+      setItem({ ...emptyItem });
+      setSvcQuery("");
       void qc.invalidateQueries({ queryKey: ["portal"] });
       toast.success("Line item added");
     },
     onError: (e: Error) => toast.error(e.message),
   });
+
 
   const delItem = useMutation({
     mutationFn: async (itemId: string) => {
