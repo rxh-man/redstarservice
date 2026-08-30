@@ -26,6 +26,7 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
   const [fullName, setFullName] = useState("");
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [justSignedIn, setJustSignedIn] = useState(false);
 
   const load = useCallback(async (uid: string | null) => {
     if (!uid) {
