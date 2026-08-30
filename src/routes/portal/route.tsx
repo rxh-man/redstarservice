@@ -13,6 +13,8 @@ import {
   LogOut,
   Loader2,
   Menu,
+  BarChart3,
+
 } from "lucide-react";
 import logo from "@/assets/red-star-logo.png";
 import { supabase } from "@/integrations/supabase/client";
@@ -155,7 +157,9 @@ function PortalShell() {
     { to: "/portal/customers", label: "Customers", icon: Users, show: true },
     { to: "/portal/invoices", label: "Invoices", icon: FileText, show: true },
     { to: "/portal/receipts", label: "Receipts", icon: Receipt, show: true },
+    { to: "/portal/reports", label: "Reports", icon: BarChart3, show: isAccountant },
     { to: "/portal/accounts", label: "Chart of Accounts", icon: BookOpenCheck, show: isAccountant },
+
     { to: "/portal/jobs", label: "Typing Jobs", icon: Keyboard, show: true },
     { to: "/portal/services", label: "Service Catalogue", icon: BookOpenCheck, show: isAdmin },
     { to: "/portal/staff", label: "Staff & Roles", icon: ShieldCheck, show: isAdmin },

@@ -26,20 +26,50 @@ function InvoiceDetail() {
   const qc = useQueryClient();
   const [itemOpen, setItemOpen] = useState(false);
   const [payOpen, setPayOpen] = useState(false);
-  const [item, setItem] = useState({ description: "", qty: "1", unit_price: "0", govt_fee: "0", taxable: true });
+  const emptyItem = {
+    service_id: "" as string,
+    description: "",
+    description_ar: "",
+    qty: "1",
+    unit_price: "0",
+    govt_fee: "0",
+    taxable: true,
+  };
+  const [item, setItem] = useState({ ...emptyItem });
+
   const [pay, setPay] = useState({ amount: "", method: "cash", reference: "", received_on: new Date().toISOString().slice(0, 10) });
+
+  const [svcQuery, setSvcQuery] = useState("");
 
   const { data, isLoading } = useQuery({
     queryKey: ["portal", "invoice", id],
     queryFn: async () => {
-      const [inv, items, receipts, settings, services] = await Promise.all([
+      const [inv, items, receipts, settings] = await Promise.all([
         supabase.from("invoices").select("*").eq("id", id).single(),
         supabase.from("invoice_items").select("*").eq("invoice_id", id).order("sort_order"),
         supabase.from("receipts").select("*").eq("invoice_id", id).order("received_on"),
         supabase.from("settings").select("*").maybeSingle(),
-        supabase.from("services").select("id, name, name_ar, service_fee, govt_fee").eq("active", true).order("name"),
       ]);
       if (inv.error) throw inv.error;
+      const services: {
+        id: string;
+        code: string | null;
+        name: string;
+        name_ar: string | null;
+        category: string | null;
+        service_fee: number;
+        govt_fee: number;
+      }[] = [];
+      for (let from = 0; ; from += 1000) {
+        const { data: chunk } = await supabase
+          .from("services")
+          .select("id, code, name, name_ar, category, service_fee, govt_fee")
+          .eq("active", true)
+          .order("name")
+          .range(from, from + 999);
+        services.push(...((chunk ?? []) as typeof services));
+        if (!chunk || chunk.length < 1000) break;
+      }
       let customer = null;
       if (inv.data.customer_id) {
         const { data: c } = await supabase.from("customers").select("*").eq("id", inv.data.customer_id).maybeSingle();
@@ -50,20 +80,29 @@ function InvoiceDetail() {
         items: items.data ?? [],
         receipts: receipts.data ?? [],
         settings: settings.data,
-        services: services.data ?? [],
+        services,
         customer,
       };
     },
   });
 
+
   const addItem = useMutation({
     mutationFn: async () => {
+      const qty = Number(item.qty);
+      if (!Number.isFinite(qty) || qty <= 0) throw new Error("Quantity must be greater than zero");
+      const fee = Number(item.unit_price);
+      const govt = Number(item.govt_fee);
+      if (!Number.isFinite(fee) || fee < 0) throw new Error("Service fee must be a positive amount");
+      if (!Number.isFinite(govt) || govt < 0) throw new Error("Government fee must be a positive amount");
       const { error } = await supabase.from("invoice_items").insert({
         invoice_id: id,
-        description: item.description,
-        qty: Number(item.qty) || 1,
-        unit_price: Number(item.unit_price) || 0,
-        govt_fee: Number(item.govt_fee) || 0,
+        service_id: item.service_id || null,
+        description: item.description.trim(),
+        description_ar: item.description_ar.trim() || null,
+        qty,
+        unit_price: fee,
+        govt_fee: govt,
         taxable: item.taxable,
         sort_order: (data?.items.length ?? 0) + 1,
       } as never);
@@ -71,12 +110,14 @@ function InvoiceDetail() {
     },
     onSuccess: () => {
       setItemOpen(false);
-      setItem({ description: "", qty: "1", unit_price: "0", govt_fee: "0", taxable: true });
+      setItem({ ...emptyItem });
+      setSvcQuery("");
       void qc.invalidateQueries({ queryKey: ["portal"] });
       toast.success("Line item added");
     },
     onError: (e: Error) => toast.error(e.message),
   });
+
 
   const delItem = useMutation({
     mutationFn: async (itemId: string) => {
@@ -89,11 +130,15 @@ function InvoiceDetail() {
 
   const addPayment = useMutation({
     mutationFn: async () => {
+      const amount = Number(pay.amount);
+      const due = Math.round((Number(data?.invoice.total ?? 0) - Number(data?.invoice.paid_amount ?? 0)) * 100) / 100;
+      if (!Number.isFinite(amount) || amount <= 0) throw new Error("Enter a payment amount greater than zero");
+      if (amount > due + 0.01) throw new Error(`Payment cannot exceed the outstanding balance of ${AED(due)}`);
       const { error } = await supabase.from("receipts").insert({
         receipt_no: "",
         invoice_id: id,
         customer_id: data?.invoice.customer_id ?? null,
-        amount: Number(pay.amount) || 0,
+        amount,
         method: pay.method,
         reference: pay.reference || null,
         received_on: pay.received_on,
@@ -101,6 +146,7 @@ function InvoiceDetail() {
       } as never);
       if (error) throw error;
     },
+
     onSuccess: () => {
       setPayOpen(false);
       setPay({ amount: "", method: "cash", reference: "", received_on: new Date().toISOString().slice(0, 10) });
@@ -125,7 +171,9 @@ function InvoiceDetail() {
   if (isLoading || !data) return <p className="text-sm text-muted-foreground">Loading invoice…</p>;
 
   const inv = data.invoice;
-  const balance = Number(inv.total) - Number(inv.paid_amount);
+  const balance = Math.round((Number(inv.total) - Number(inv.paid_amount)) * 100) / 100;
+  const locked = inv.status === "cancelled" || inv.status === "paid";
+  const canCollect = inv.status !== "cancelled" && balance > 0;
 
   return (
     <div>
@@ -138,19 +186,41 @@ function InvoiceDetail() {
         <div className="flex flex-wrap gap-2">
           {isAccountant ? (
             <>
-              <Button size="sm" variant="outline" onClick={() => setItemOpen(true)}>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={locked}
+                title={locked ? "Paid and cancelled invoices are locked" : undefined}
+                onClick={() => setItemOpen(true)}
+              >
                 <Plus className="mr-2 h-4 w-4" /> Line item
               </Button>
-              <Button size="sm" variant="outline" onClick={() => setPayOpen(true)}>
+              <Button size="sm" variant="outline" disabled={!canCollect} onClick={() => setPayOpen(true)}>
                 <BadgeCheck className="mr-2 h-4 w-4" /> Record payment
               </Button>
               {inv.status === "draft" ? (
-                <Button size="sm" variant="outline" onClick={() => setStatus.mutate("sent")}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={data.items.length === 0}
+                  title={data.items.length === 0 ? "Add at least one line item first" : undefined}
+                  onClick={() => setStatus.mutate("sent")}
+                >
                   Mark as sent
                 </Button>
               ) : null}
               {inv.status !== "cancelled" && isAdmin ? (
-                <Button size="sm" variant="outline" onClick={() => setStatus.mutate("cancelled")}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    if (Number(inv.paid_amount) > 0) {
+                      toast.error("Delete the receipts on this invoice before cancelling it.");
+                      return;
+                    }
+                    if (confirm(`Cancel invoice ${inv.invoice_no}?`)) setStatus.mutate("cancelled");
+                  }}
+                >
                   Cancel invoice
                 </Button>
               ) : null}
@@ -161,6 +231,13 @@ function InvoiceDetail() {
           </Button>
         </div>
       </div>
+
+      {locked ? (
+        <p className="mb-4 rounded-lg border border-border bg-muted px-4 py-2 text-xs text-muted-foreground print:hidden">
+          This invoice is {inv.status} and locked for editing. Line items can no longer be changed.
+        </p>
+      ) : null}
+
 
       <Panel className="p-6 md:p-10 print:border-0 print:shadow-none">
         <div className="flex flex-wrap items-start justify-between gap-6 border-b border-border pb-6">
@@ -236,12 +313,18 @@ function InvoiceDetail() {
                     {AED(Number(it.qty) * Number(it.unit_price) + Number(it.govt_fee))}
                   </td>
                   <td className="px-2 py-3 text-right print:hidden">
-                    {isAccountant ? (
-                      <button onClick={() => delItem.mutate(it.id)} aria-label="Remove line">
+                    {isAccountant && !locked ? (
+                      <button
+                        onClick={() => {
+                          if (confirm("Remove this line item?")) delItem.mutate(it.id);
+                        }}
+                        aria-label="Remove line"
+                      >
                         <Trash2 className="h-3.5 w-3.5 text-destructive" />
                       </button>
                     ) : null}
                   </td>
+
                 </tr>
               ))}
               {data.items.length === 0 ? (
@@ -315,30 +398,73 @@ function InvoiceDetail() {
           </DialogHeader>
           <div className="space-y-3">
             <div className="space-y-1.5">
-              <Label htmlFor="svc">Pick from service catalogue</Label>
-              <select
+              <Label htmlFor="svc">Search the service catalogue ({data.services.length.toLocaleString()} services)</Label>
+              <Input
                 id="svc"
-                className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
-                onChange={(e) => {
-                  const s = data.services.find((x) => x.id === e.target.value);
-                  if (s)
-                    setItem({
-                      description: s.name,
-                      qty: "1",
-                      unit_price: String(s.service_fee),
-                      govt_fee: String(s.govt_fee),
-                      taxable: true,
-                    });
-                }}
-              >
-                <option value="">— custom line —</option>
-                {data.services.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.name}
-                  </option>
-                ))}
-              </select>
+                placeholder="Type a service code or name, e.g. 110021 or Emirates ID…"
+                value={svcQuery}
+                onChange={(e) => setSvcQuery(e.target.value)}
+              />
+              {svcQuery.trim().length >= 2 ? (
+                <div className="max-h-56 overflow-y-auto rounded-md border border-border">
+                  {data.services
+                    .filter((s) => {
+                      const t = svcQuery.trim().toLowerCase();
+                      return (
+                        s.name.toLowerCase().includes(t) ||
+                        (s.code ?? "").toLowerCase().includes(t) ||
+                        (s.name_ar ?? "").includes(svcQuery.trim())
+                      );
+                    })
+                    .slice(0, 40)
+                    .map((s) => (
+                      <button
+                        key={s.id}
+                        type="button"
+                        className={`flex w-full items-start justify-between gap-3 border-b border-border px-3 py-2 text-left text-xs last:border-0 hover:bg-muted ${
+                          item.service_id === s.id ? "bg-muted" : ""
+                        }`}
+                        onClick={() => {
+                          setItem({
+                            service_id: s.id,
+                            description: s.name,
+                            description_ar: s.name_ar ?? "",
+                            qty: "1",
+                            unit_price: String(s.service_fee),
+                            govt_fee: String(s.govt_fee),
+                            taxable: true,
+                          });
+                          setSvcQuery("");
+                        }}
+                      >
+                        <span className="min-w-0">
+                          <span className="block font-medium">{s.name}</span>
+                          <span className="block text-muted-foreground">
+                            {s.code} · {s.category ?? "—"}
+                          </span>
+                        </span>
+                        <span className="whitespace-nowrap text-muted-foreground">
+                          {AED(s.service_fee)} + {AED(s.govt_fee)}
+                        </span>
+                      </button>
+                    ))}
+                </div>
+              ) : (
+                <p className="text-xs text-muted-foreground">
+                  Type at least 2 characters, or leave blank and enter a custom line below.
+                </p>
+              )}
             </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="desc_ar">Description (Arabic)</Label>
+              <Input
+                id="desc_ar"
+                className="arabic"
+                value={item.description_ar}
+                onChange={(e) => setItem({ ...item, description_ar: e.target.value })}
+              />
+            </div>
+
             <div className="space-y-1.5">
               <Label htmlFor="desc">Description</Label>
               <Textarea
