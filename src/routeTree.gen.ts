@@ -19,6 +19,7 @@ import { Route as PortalIndexRouteImport } from './routes/portal/index'
 import { Route as PortalStaffRouteImport } from './routes/portal/staff'
 import { Route as PortalSettingsRouteImport } from './routes/portal/settings'
 import { Route as PortalServicesRouteImport } from './routes/portal/services'
+import { Route as PortalReportsRouteImport } from './routes/portal/reports'
 import { Route as PortalReceiptsRouteImport } from './routes/portal/receipts'
 import { Route as PortalJobsRouteImport } from './routes/portal/jobs'
 import { Route as PortalCustomersRouteImport } from './routes/portal/customers'
@@ -77,6 +78,11 @@ const PortalServicesRoute = PortalServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => PortalRouteRoute,
 } as any)
+const PortalReportsRoute = PortalReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
 const PortalReceiptsRoute = PortalReceiptsRouteImport.update({
   id: '/receipts',
   path: '/receipts',
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
+  '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
@@ -143,6 +150,7 @@ export interface FileRoutesByTo {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
+  '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
@@ -163,6 +171,7 @@ export interface FileRoutesById {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
+  '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
@@ -184,6 +193,7 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/jobs'
     | '/portal/receipts'
+    | '/portal/reports'
     | '/portal/services'
     | '/portal/settings'
     | '/portal/staff'
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/jobs'
     | '/portal/receipts'
+    | '/portal/reports'
     | '/portal/services'
     | '/portal/settings'
     | '/portal/staff'
@@ -221,6 +232,7 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/jobs'
     | '/portal/receipts'
+    | '/portal/reports'
     | '/portal/services'
     | '/portal/settings'
     | '/portal/staff'
@@ -311,6 +323,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalServicesRouteImport
       parentRoute: typeof PortalRouteRoute
     }
+    '/portal/reports': {
+      id: '/portal/reports'
+      path: '/reports'
+      fullPath: '/portal/reports'
+      preLoaderRoute: typeof PortalReportsRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
     '/portal/receipts': {
       id: '/portal/receipts'
       path: '/receipts'
@@ -368,6 +387,7 @@ interface PortalRouteRouteChildren {
   PortalCustomersRoute: typeof PortalCustomersRoute
   PortalJobsRoute: typeof PortalJobsRoute
   PortalReceiptsRoute: typeof PortalReceiptsRoute
+  PortalReportsRoute: typeof PortalReportsRoute
   PortalServicesRoute: typeof PortalServicesRoute
   PortalSettingsRoute: typeof PortalSettingsRoute
   PortalStaffRoute: typeof PortalStaffRoute
@@ -381,6 +401,7 @@ const PortalRouteRouteChildren: PortalRouteRouteChildren = {
   PortalCustomersRoute: PortalCustomersRoute,
   PortalJobsRoute: PortalJobsRoute,
   PortalReceiptsRoute: PortalReceiptsRoute,
+  PortalReportsRoute: PortalReportsRoute,
   PortalServicesRoute: PortalServicesRoute,
   PortalSettingsRoute: PortalSettingsRoute,
   PortalStaffRoute: PortalStaffRoute,
