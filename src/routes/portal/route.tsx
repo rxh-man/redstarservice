@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import logo from "@/assets/red-star-logo.png";
 import { supabase } from "@/integrations/supabase/client";
-import { PortalProvider, usePortal } from "@/lib/portal";
+import { PortalProvider, usePortal, WelcomeBanner } from "@/lib/portal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
