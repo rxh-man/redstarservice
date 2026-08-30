@@ -17,6 +17,7 @@ import { Route as PortalRouteRouteImport } from './routes/portal/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortalIndexRouteImport } from './routes/portal/index'
 import { Route as PortalStaffRouteImport } from './routes/portal/staff'
+import { Route as PortalSettingsRouteImport } from './routes/portal/settings'
 import { Route as PortalServicesRouteImport } from './routes/portal/services'
 import { Route as PortalReceiptsRouteImport } from './routes/portal/receipts'
 import { Route as PortalJobsRouteImport } from './routes/portal/jobs'
@@ -64,6 +65,11 @@ const PortalIndexRoute = PortalIndexRouteImport.update({
 const PortalStaffRoute = PortalStaffRouteImport.update({
   id: '/staff',
   path: '/staff',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalSettingsRoute = PortalSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => PortalRouteRoute,
 } as any)
 const PortalServicesRoute = PortalServicesRouteImport.update({
@@ -120,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/services': typeof PortalServicesRoute
+  '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
   '/portal/': typeof PortalIndexRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/services': typeof PortalServicesRoute
+  '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
   '/portal': typeof PortalIndexRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
@@ -156,6 +164,7 @@ export interface FileRoutesById {
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/services': typeof PortalServicesRoute
+  '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
   '/portal/': typeof PortalIndexRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
@@ -176,6 +185,7 @@ export interface FileRouteTypes {
     | '/portal/jobs'
     | '/portal/receipts'
     | '/portal/services'
+    | '/portal/settings'
     | '/portal/staff'
     | '/portal/'
     | '/portal/invoices/$id'
@@ -193,6 +203,7 @@ export interface FileRouteTypes {
     | '/portal/jobs'
     | '/portal/receipts'
     | '/portal/services'
+    | '/portal/settings'
     | '/portal/staff'
     | '/portal'
     | '/portal/invoices/$id'
@@ -211,6 +222,7 @@ export interface FileRouteTypes {
     | '/portal/jobs'
     | '/portal/receipts'
     | '/portal/services'
+    | '/portal/settings'
     | '/portal/staff'
     | '/portal/'
     | '/portal/invoices/$id'
@@ -285,6 +297,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalStaffRouteImport
       parentRoute: typeof PortalRouteRoute
     }
+    '/portal/settings': {
+      id: '/portal/settings'
+      path: '/settings'
+      fullPath: '/portal/settings'
+      preLoaderRoute: typeof PortalSettingsRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
     '/portal/services': {
       id: '/portal/services'
       path: '/services'
@@ -350,6 +369,7 @@ interface PortalRouteRouteChildren {
   PortalJobsRoute: typeof PortalJobsRoute
   PortalReceiptsRoute: typeof PortalReceiptsRoute
   PortalServicesRoute: typeof PortalServicesRoute
+  PortalSettingsRoute: typeof PortalSettingsRoute
   PortalStaffRoute: typeof PortalStaffRoute
   PortalIndexRoute: typeof PortalIndexRoute
   PortalInvoicesIdRoute: typeof PortalInvoicesIdRoute
@@ -362,6 +382,7 @@ const PortalRouteRouteChildren: PortalRouteRouteChildren = {
   PortalJobsRoute: PortalJobsRoute,
   PortalReceiptsRoute: PortalReceiptsRoute,
   PortalServicesRoute: PortalServicesRoute,
+  PortalSettingsRoute: PortalSettingsRoute,
   PortalStaffRoute: PortalStaffRoute,
   PortalIndexRoute: PortalIndexRoute,
   PortalInvoicesIdRoute: PortalInvoicesIdRoute,
