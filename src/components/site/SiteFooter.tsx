@@ -68,6 +68,10 @@ export function SiteFooter() {
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-5 text-center text-xs opacity-70">
           © 2026 {t("Red Star Services. All rights reserved.", "النجم الأحمر للخدمات. جميع الحقوق محفوظة.")}
+          <span className="mx-2 opacity-40">·</span>
+          <Link to="/portal" className="underline-offset-4 hover:underline">
+            {t("Staff Portal", "بوابة الموظفين")}
+          </Link>
         </div>
       </div>
     </footer>
