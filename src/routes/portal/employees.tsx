@@ -99,11 +99,19 @@ function EmployeesPage() {
             {rows.map((e) => (
               <tr key={e.id} className="hover:bg-muted/40">
                 <td className="px-4 py-3">
-                  <div className="font-medium">{e.name}</div>
+                  <Link
+                    to="/portal/companies/$id"
+                    params={{ id: e.company_id }}
+                    className="font-medium hover:underline"
+                    title="Open the company page to edit this employee"
+                  >
+                    {e.name}
+                  </Link>
                   <div className="text-xs text-muted-foreground">
                     {[e.designation, e.nationality].filter(Boolean).join(" · ") || "—"}
                   </div>
                 </td>
+
                 <td className="px-4 py-3">
                   <Link to="/portal/companies/$id" params={{ id: e.company_id }} className="hover:underline">
                     {companyName(e.company_id)}
