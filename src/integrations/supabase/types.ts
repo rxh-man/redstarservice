@@ -50,6 +50,157 @@ export type Database = {
         }
         Relationships: []
       }
+      companies: {
+        Row: {
+          active: boolean
+          address: string | null
+          assigned_typist: string | null
+          created_at: string
+          created_by: string | null
+          customer_id: string | null
+          email: string | null
+          establishment_card_expiry: string | null
+          establishment_card_no: string | null
+          id: string
+          license_expiry: string | null
+          name: string
+          name_ar: string | null
+          notes: string | null
+          phone: string | null
+          trade_license_no: string | null
+          trn: string | null
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          address?: string | null
+          assigned_typist?: string | null
+          created_at?: string
+          created_by?: string | null
+          customer_id?: string | null
+          email?: string | null
+          establishment_card_expiry?: string | null
+          establishment_card_no?: string | null
+          id?: string
+          license_expiry?: string | null
+          name: string
+          name_ar?: string | null
+          notes?: string | null
+          phone?: string | null
+          trade_license_no?: string | null
+          trn?: string | null
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          address?: string | null
+          assigned_typist?: string | null
+          created_at?: string
+          created_by?: string | null
+          customer_id?: string | null
+          email?: string | null
+          establishment_card_expiry?: string | null
+          establishment_card_no?: string | null
+          id?: string
+          license_expiry?: string | null
+          name?: string
+          name_ar?: string | null
+          notes?: string | null
+          phone?: string | null
+          trade_license_no?: string | null
+          trn?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "companies_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      company_employees: {
+        Row: {
+          company_id: string
+          created_at: string
+          created_by: string | null
+          designation: string | null
+          email: string | null
+          emirates_id_expiry: string | null
+          emirates_id_no: string | null
+          id: string
+          labour_card_expiry: string | null
+          labour_card_no: string | null
+          name: string
+          name_ar: string | null
+          nationality: string | null
+          notes: string | null
+          passport_expiry: string | null
+          passport_no: string | null
+          phone: string | null
+          status: string
+          updated_at: string
+          visa_expiry: string | null
+          visa_no: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          designation?: string | null
+          email?: string | null
+          emirates_id_expiry?: string | null
+          emirates_id_no?: string | null
+          id?: string
+          labour_card_expiry?: string | null
+          labour_card_no?: string | null
+          name: string
+          name_ar?: string | null
+          nationality?: string | null
+          notes?: string | null
+          passport_expiry?: string | null
+          passport_no?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+          visa_expiry?: string | null
+          visa_no?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          designation?: string | null
+          email?: string | null
+          emirates_id_expiry?: string | null
+          emirates_id_no?: string | null
+          id?: string
+          labour_card_expiry?: string | null
+          labour_card_no?: string | null
+          name?: string
+          name_ar?: string | null
+          nationality?: string | null
+          notes?: string | null
+          passport_expiry?: string | null
+          passport_no?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+          visa_expiry?: string | null
+          visa_no?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_employees_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       customers: {
         Row: {
           address: string | null
@@ -494,11 +645,263 @@ export type Database = {
         }
         Relationships: []
       }
+      workflow_step_documents: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_path: string
+          id: string
+          mime_type: string | null
+          size_bytes: number | null
+          step_id: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_path: string
+          id?: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          step_id: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_path?: string
+          id?: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          step_id?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_step_documents_step_id_fkey"
+            columns: ["step_id"]
+            isOneToOne: false
+            referencedRelation: "workflow_steps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workflow_steps: {
+        Row: {
+          assigned_typist: string | null
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          name_ar: string | null
+          notes: string | null
+          requirement: string
+          sequence_no: number
+          status: string
+          updated_at: string
+          workflow_id: string
+        }
+        Insert: {
+          assigned_typist?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          name_ar?: string | null
+          notes?: string | null
+          requirement?: string
+          sequence_no: number
+          status?: string
+          updated_at?: string
+          workflow_id: string
+        }
+        Update: {
+          assigned_typist?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          name_ar?: string | null
+          notes?: string | null
+          requirement?: string
+          sequence_no?: number
+          status?: string
+          updated_at?: string
+          workflow_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_steps_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "workflows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workflow_template_steps: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          name_ar: string | null
+          requirement: string
+          sequence_no: number
+          template_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          name_ar?: string | null
+          requirement?: string
+          sequence_no: number
+          template_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          name_ar?: string | null
+          requirement?: string
+          sequence_no?: number
+          template_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_template_steps_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "workflow_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workflow_templates: {
+        Row: {
+          active: boolean
+          code: string
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          name_ar: string | null
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          code: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          name_ar?: string | null
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          code?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          name_ar?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      workflows: {
+        Row: {
+          assigned_typist: string | null
+          company_id: string
+          created_at: string
+          created_by: string | null
+          employee_id: string | null
+          id: string
+          invoice_id: string | null
+          notes: string | null
+          status: string
+          template_id: string | null
+          title: string
+          updated_at: string
+          workflow_no: string
+        }
+        Insert: {
+          assigned_typist?: string | null
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string | null
+          id?: string
+          invoice_id?: string | null
+          notes?: string | null
+          status?: string
+          template_id?: string | null
+          title: string
+          updated_at?: string
+          workflow_no: string
+        }
+        Update: {
+          assigned_typist?: string | null
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string | null
+          id?: string
+          invoice_id?: string | null
+          notes?: string | null
+          status?: string
+          template_id?: string | null
+          title?: string
+          updated_at?: string
+          workflow_no?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflows_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflows_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "company_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflows_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflows_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "workflow_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      can_access_company: { Args: { _company_id: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

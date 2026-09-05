@@ -22,11 +22,16 @@ import { Route as PortalServicesRouteImport } from './routes/portal/services'
 import { Route as PortalReportsRouteImport } from './routes/portal/reports'
 import { Route as PortalReceiptsRouteImport } from './routes/portal/receipts'
 import { Route as PortalJobsRouteImport } from './routes/portal/jobs'
+import { Route as PortalEmployeesRouteImport } from './routes/portal/employees'
 import { Route as PortalCustomersRouteImport } from './routes/portal/customers'
 import { Route as PortalAccountsRouteImport } from './routes/portal/accounts'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as PortalWorkflowsIndexRouteImport } from './routes/portal/workflows.index'
 import { Route as PortalInvoicesIndexRouteImport } from './routes/portal/invoices.index'
+import { Route as PortalCompaniesIndexRouteImport } from './routes/portal/companies.index'
+import { Route as PortalWorkflowsIdRouteImport } from './routes/portal/workflows.$id'
 import { Route as PortalInvoicesIdRouteImport } from './routes/portal/invoices.$id'
+import { Route as PortalCompaniesIdRouteImport } from './routes/portal/companies.$id'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -93,6 +98,11 @@ const PortalJobsRoute = PortalJobsRouteImport.update({
   path: '/jobs',
   getParentRoute: () => PortalRouteRoute,
 } as any)
+const PortalEmployeesRoute = PortalEmployeesRouteImport.update({
+  id: '/employees',
+  path: '/employees',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
 const PortalCustomersRoute = PortalCustomersRouteImport.update({
   id: '/customers',
   path: '/customers',
@@ -108,14 +118,34 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalWorkflowsIndexRoute = PortalWorkflowsIndexRouteImport.update({
+  id: '/workflows/',
+  path: '/workflows/',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
 const PortalInvoicesIndexRoute = PortalInvoicesIndexRouteImport.update({
   id: '/invoices/',
   path: '/invoices/',
   getParentRoute: () => PortalRouteRoute,
 } as any)
+const PortalCompaniesIndexRoute = PortalCompaniesIndexRouteImport.update({
+  id: '/companies/',
+  path: '/companies/',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalWorkflowsIdRoute = PortalWorkflowsIdRouteImport.update({
+  id: '/workflows/$id',
+  path: '/workflows/$id',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
 const PortalInvoicesIdRoute = PortalInvoicesIdRouteImport.update({
   id: '/invoices/$id',
   path: '/invoices/$id',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalCompaniesIdRoute = PortalCompaniesIdRouteImport.update({
+  id: '/companies/$id',
+  path: '/companies/$id',
   getParentRoute: () => PortalRouteRoute,
 } as any)
 
@@ -129,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/api/chat': typeof ApiChatRoute
   '/portal/accounts': typeof PortalAccountsRoute
   '/portal/customers': typeof PortalCustomersRoute
+  '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
@@ -136,8 +167,12 @@ export interface FileRoutesByFullPath {
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
   '/portal/': typeof PortalIndexRoute
+  '/portal/companies/$id': typeof PortalCompaniesIdRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
+  '/portal/workflows/$id': typeof PortalWorkflowsIdRoute
+  '/portal/companies/': typeof PortalCompaniesIndexRoute
   '/portal/invoices/': typeof PortalInvoicesIndexRoute
+  '/portal/workflows/': typeof PortalWorkflowsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -148,6 +183,7 @@ export interface FileRoutesByTo {
   '/api/chat': typeof ApiChatRoute
   '/portal/accounts': typeof PortalAccountsRoute
   '/portal/customers': typeof PortalCustomersRoute
+  '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
@@ -155,8 +191,12 @@ export interface FileRoutesByTo {
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
   '/portal': typeof PortalIndexRoute
+  '/portal/companies/$id': typeof PortalCompaniesIdRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
+  '/portal/workflows/$id': typeof PortalWorkflowsIdRoute
+  '/portal/companies': typeof PortalCompaniesIndexRoute
   '/portal/invoices': typeof PortalInvoicesIndexRoute
+  '/portal/workflows': typeof PortalWorkflowsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -169,6 +209,7 @@ export interface FileRoutesById {
   '/api/chat': typeof ApiChatRoute
   '/portal/accounts': typeof PortalAccountsRoute
   '/portal/customers': typeof PortalCustomersRoute
+  '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
@@ -176,8 +217,12 @@ export interface FileRoutesById {
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
   '/portal/': typeof PortalIndexRoute
+  '/portal/companies/$id': typeof PortalCompaniesIdRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
+  '/portal/workflows/$id': typeof PortalWorkflowsIdRoute
+  '/portal/companies/': typeof PortalCompaniesIndexRoute
   '/portal/invoices/': typeof PortalInvoicesIndexRoute
+  '/portal/workflows/': typeof PortalWorkflowsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -191,6 +236,7 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/portal/accounts'
     | '/portal/customers'
+    | '/portal/employees'
     | '/portal/jobs'
     | '/portal/receipts'
     | '/portal/reports'
@@ -198,8 +244,12 @@ export interface FileRouteTypes {
     | '/portal/settings'
     | '/portal/staff'
     | '/portal/'
+    | '/portal/companies/$id'
     | '/portal/invoices/$id'
+    | '/portal/workflows/$id'
+    | '/portal/companies/'
     | '/portal/invoices/'
+    | '/portal/workflows/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -210,6 +260,7 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/portal/accounts'
     | '/portal/customers'
+    | '/portal/employees'
     | '/portal/jobs'
     | '/portal/receipts'
     | '/portal/reports'
@@ -217,8 +268,12 @@ export interface FileRouteTypes {
     | '/portal/settings'
     | '/portal/staff'
     | '/portal'
+    | '/portal/companies/$id'
     | '/portal/invoices/$id'
+    | '/portal/workflows/$id'
+    | '/portal/companies'
     | '/portal/invoices'
+    | '/portal/workflows'
   id:
     | '__root__'
     | '/'
@@ -230,6 +285,7 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/portal/accounts'
     | '/portal/customers'
+    | '/portal/employees'
     | '/portal/jobs'
     | '/portal/receipts'
     | '/portal/reports'
@@ -237,8 +293,12 @@ export interface FileRouteTypes {
     | '/portal/settings'
     | '/portal/staff'
     | '/portal/'
+    | '/portal/companies/$id'
     | '/portal/invoices/$id'
+    | '/portal/workflows/$id'
+    | '/portal/companies/'
     | '/portal/invoices/'
+    | '/portal/workflows/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -344,6 +404,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalJobsRouteImport
       parentRoute: typeof PortalRouteRoute
     }
+    '/portal/employees': {
+      id: '/portal/employees'
+      path: '/employees'
+      fullPath: '/portal/employees'
+      preLoaderRoute: typeof PortalEmployeesRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
     '/portal/customers': {
       id: '/portal/customers'
       path: '/customers'
@@ -365,11 +432,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal/workflows/': {
+      id: '/portal/workflows/'
+      path: '/workflows'
+      fullPath: '/portal/workflows/'
+      preLoaderRoute: typeof PortalWorkflowsIndexRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
     '/portal/invoices/': {
       id: '/portal/invoices/'
       path: '/invoices'
       fullPath: '/portal/invoices/'
       preLoaderRoute: typeof PortalInvoicesIndexRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
+    '/portal/companies/': {
+      id: '/portal/companies/'
+      path: '/companies'
+      fullPath: '/portal/companies/'
+      preLoaderRoute: typeof PortalCompaniesIndexRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
+    '/portal/workflows/$id': {
+      id: '/portal/workflows/$id'
+      path: '/workflows/$id'
+      fullPath: '/portal/workflows/$id'
+      preLoaderRoute: typeof PortalWorkflowsIdRouteImport
       parentRoute: typeof PortalRouteRoute
     }
     '/portal/invoices/$id': {
@@ -379,12 +467,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalInvoicesIdRouteImport
       parentRoute: typeof PortalRouteRoute
     }
+    '/portal/companies/$id': {
+      id: '/portal/companies/$id'
+      path: '/companies/$id'
+      fullPath: '/portal/companies/$id'
+      preLoaderRoute: typeof PortalCompaniesIdRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
   }
 }
 
 interface PortalRouteRouteChildren {
   PortalAccountsRoute: typeof PortalAccountsRoute
   PortalCustomersRoute: typeof PortalCustomersRoute
+  PortalEmployeesRoute: typeof PortalEmployeesRoute
   PortalJobsRoute: typeof PortalJobsRoute
   PortalReceiptsRoute: typeof PortalReceiptsRoute
   PortalReportsRoute: typeof PortalReportsRoute
@@ -392,13 +488,18 @@ interface PortalRouteRouteChildren {
   PortalSettingsRoute: typeof PortalSettingsRoute
   PortalStaffRoute: typeof PortalStaffRoute
   PortalIndexRoute: typeof PortalIndexRoute
+  PortalCompaniesIdRoute: typeof PortalCompaniesIdRoute
   PortalInvoicesIdRoute: typeof PortalInvoicesIdRoute
+  PortalWorkflowsIdRoute: typeof PortalWorkflowsIdRoute
+  PortalCompaniesIndexRoute: typeof PortalCompaniesIndexRoute
   PortalInvoicesIndexRoute: typeof PortalInvoicesIndexRoute
+  PortalWorkflowsIndexRoute: typeof PortalWorkflowsIndexRoute
 }
 
 const PortalRouteRouteChildren: PortalRouteRouteChildren = {
   PortalAccountsRoute: PortalAccountsRoute,
   PortalCustomersRoute: PortalCustomersRoute,
+  PortalEmployeesRoute: PortalEmployeesRoute,
   PortalJobsRoute: PortalJobsRoute,
   PortalReceiptsRoute: PortalReceiptsRoute,
   PortalReportsRoute: PortalReportsRoute,
@@ -406,8 +507,12 @@ const PortalRouteRouteChildren: PortalRouteRouteChildren = {
   PortalSettingsRoute: PortalSettingsRoute,
   PortalStaffRoute: PortalStaffRoute,
   PortalIndexRoute: PortalIndexRoute,
+  PortalCompaniesIdRoute: PortalCompaniesIdRoute,
   PortalInvoicesIdRoute: PortalInvoicesIdRoute,
+  PortalWorkflowsIdRoute: PortalWorkflowsIdRoute,
+  PortalCompaniesIndexRoute: PortalCompaniesIndexRoute,
   PortalInvoicesIndexRoute: PortalInvoicesIndexRoute,
+  PortalWorkflowsIndexRoute: PortalWorkflowsIndexRoute,
 }
 
 const PortalRouteRouteWithChildren = PortalRouteRoute._addFileChildren(
