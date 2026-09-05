@@ -14,6 +14,9 @@ import {
   Loader2,
   Menu,
   BarChart3,
+  Building2,
+  UsersRound,
+  ListChecks,
 
 } from "lucide-react";
 import logo from "@/assets/red-star-logo.png";
@@ -156,6 +159,9 @@ function PortalShell() {
   const nav = [
     { to: "/portal", label: "Dashboard", icon: LayoutDashboard, show: true },
     { to: "/portal/customers", label: "Customers", icon: Users, show: true },
+    { to: "/portal/companies", label: "Companies", icon: Building2, show: true },
+    { to: "/portal/employees", label: "Employees", icon: UsersRound, show: true },
+    { to: "/portal/workflows", label: "Workflows", icon: ListChecks, show: true },
     { to: "/portal/invoices", label: "Invoices", icon: FileText, show: true },
     { to: "/portal/receipts", label: "Receipts", icon: Receipt, show: true },
     { to: "/portal/reports", label: "Reports", icon: BarChart3, show: isAccountant },

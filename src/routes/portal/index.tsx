@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FileText, Users, Receipt, Keyboard, TrendingUp, AlertCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AED, Panel, PortalHeading, StatusBadge, fmtDate, usePortal } from "@/lib/portal";
+import { ExpiryAlerts } from "@/components/portal/ExpiryAlerts";
 
 export const Route = createFileRoute("/portal/")({ component: Dashboard });
 
@@ -52,6 +53,10 @@ function Dashboard() {
         title={`Welcome${fullName ? `, ${fullName.split(" ")[0]}` : ""}`}
         subtitle="Live snapshot of transactions, collections and the typing queue."
       />
+
+      <div className="mb-6">
+        <ExpiryAlerts />
+      </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {cards.map((c) => (
