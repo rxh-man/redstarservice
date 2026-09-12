@@ -374,6 +374,13 @@ function KioskDashboard({
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 md:px-8">
           <div className="flex items-center gap-3">
             <img src={logo} alt="Red Star Services" className="h-10 w-auto object-contain" />
+            {vendor?.name?.toLowerCase().includes("triplux") ? (
+              <img
+                src={tripluxAsset.url}
+                alt="TripLux Tourism"
+                className="h-10 w-auto rounded-md border border-border object-contain"
+              />
+            ) : null}
             <div className="leading-tight">
               <div className="text-sm font-semibold">Kiosk Vendor Portal</div>
               <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
