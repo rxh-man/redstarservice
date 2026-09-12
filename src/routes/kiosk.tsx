@@ -77,6 +77,7 @@ const USERNAME_MAP: Record<string, string> = {
   "express umrah": "expressumrah@redstarservice.ae",
   expressumrah: "expressumrah@redstarservice.ae",
   triplex: "triplex@redstarservice.ae",
+  triplux: "triplex@redstarservice.ae",
 };
 
 function resolveEmail(input: string) {
@@ -378,7 +379,7 @@ function KioskDashboard({
               <img
                 src={tripluxAsset.url}
                 alt="TripLux Tourism"
-                className="h-10 w-auto rounded-md border border-border object-contain"
+                className="h-16 w-auto rounded-md border border-border bg-white object-contain p-1"
               />
             ) : null}
             <div className="leading-tight">
