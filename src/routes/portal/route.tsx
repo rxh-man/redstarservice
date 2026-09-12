@@ -17,6 +17,8 @@ import {
   Building2,
   UsersRound,
   ListChecks,
+  Store,
+
 
 } from "lucide-react";
 import logo from "@/assets/red-star-logo.png";
@@ -168,6 +170,7 @@ function PortalShell() {
     { to: "/portal/accounts", label: "Chart of Accounts", icon: BookOpenCheck, show: isAccountant },
 
     { to: "/portal/jobs", label: "Typing Jobs", icon: Keyboard, show: true },
+    { to: "/portal/kiosks", label: "Kiosk Vendors", icon: Store, show: isAccountant },
     { to: "/portal/services", label: "Service Catalogue", icon: BookOpenCheck, show: isAdmin },
     { to: "/portal/staff", label: "Staff & Roles", icon: ShieldCheck, show: isAdmin },
     { to: "/portal/settings", label: "Settings", icon: Settings, show: isAdmin },

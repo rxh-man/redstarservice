@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as QuotationRouteImport } from './routes/quotation'
 import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as KioskRouteImport } from './routes/kiosk'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as PortalRouteRouteImport } from './routes/portal/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -21,6 +22,7 @@ import { Route as PortalSettingsRouteImport } from './routes/portal/settings'
 import { Route as PortalServicesRouteImport } from './routes/portal/services'
 import { Route as PortalReportsRouteImport } from './routes/portal/reports'
 import { Route as PortalReceiptsRouteImport } from './routes/portal/receipts'
+import { Route as PortalKiosksRouteImport } from './routes/portal/kiosks'
 import { Route as PortalJobsRouteImport } from './routes/portal/jobs'
 import { Route as PortalEmployeesRouteImport } from './routes/portal/employees'
 import { Route as PortalCustomersRouteImport } from './routes/portal/customers'
@@ -46,6 +48,11 @@ const QuotationRoute = QuotationRouteImport.update({
 const PartnersRoute = PartnersRouteImport.update({
   id: '/partners',
   path: '/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KioskRoute = KioskRouteImport.update({
+  id: '/kiosk',
+  path: '/kiosk',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -91,6 +98,11 @@ const PortalReportsRoute = PortalReportsRouteImport.update({
 const PortalReceiptsRoute = PortalReceiptsRouteImport.update({
   id: '/receipts',
   path: '/receipts',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalKiosksRoute = PortalKiosksRouteImport.update({
+  id: '/kiosks',
+  path: '/kiosks',
   getParentRoute: () => PortalRouteRoute,
 } as any)
 const PortalJobsRoute = PortalJobsRouteImport.update({
@@ -153,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/portal': typeof PortalRouteRouteWithChildren
   '/contact': typeof ContactRoute
+  '/kiosk': typeof KioskRoute
   '/partners': typeof PartnersRoute
   '/quotation': typeof QuotationRoute
   '/services': typeof ServicesRoute
@@ -161,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
+  '/portal/kiosks': typeof PortalKiosksRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
@@ -177,6 +191,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/kiosk': typeof KioskRoute
   '/partners': typeof PartnersRoute
   '/quotation': typeof QuotationRoute
   '/services': typeof ServicesRoute
@@ -185,6 +200,7 @@ export interface FileRoutesByTo {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
+  '/portal/kiosks': typeof PortalKiosksRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
@@ -203,6 +219,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/portal': typeof PortalRouteRouteWithChildren
   '/contact': typeof ContactRoute
+  '/kiosk': typeof KioskRoute
   '/partners': typeof PartnersRoute
   '/quotation': typeof QuotationRoute
   '/services': typeof ServicesRoute
@@ -211,6 +228,7 @@ export interface FileRoutesById {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
+  '/portal/kiosks': typeof PortalKiosksRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
@@ -230,6 +248,7 @@ export interface FileRouteTypes {
     | '/'
     | '/portal'
     | '/contact'
+    | '/kiosk'
     | '/partners'
     | '/quotation'
     | '/services'
@@ -238,6 +257,7 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/employees'
     | '/portal/jobs'
+    | '/portal/kiosks'
     | '/portal/receipts'
     | '/portal/reports'
     | '/portal/services'
@@ -254,6 +274,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contact'
+    | '/kiosk'
     | '/partners'
     | '/quotation'
     | '/services'
@@ -262,6 +283,7 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/employees'
     | '/portal/jobs'
+    | '/portal/kiosks'
     | '/portal/receipts'
     | '/portal/reports'
     | '/portal/services'
@@ -279,6 +301,7 @@ export interface FileRouteTypes {
     | '/'
     | '/portal'
     | '/contact'
+    | '/kiosk'
     | '/partners'
     | '/quotation'
     | '/services'
@@ -287,6 +310,7 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/employees'
     | '/portal/jobs'
+    | '/portal/kiosks'
     | '/portal/receipts'
     | '/portal/reports'
     | '/portal/services'
@@ -305,6 +329,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PortalRouteRoute: typeof PortalRouteRouteWithChildren
   ContactRoute: typeof ContactRoute
+  KioskRoute: typeof KioskRoute
   PartnersRoute: typeof PartnersRoute
   QuotationRoute: typeof QuotationRoute
   ServicesRoute: typeof ServicesRoute
@@ -332,6 +357,13 @@ declare module '@tanstack/react-router' {
       path: '/partners'
       fullPath: '/partners'
       preLoaderRoute: typeof PartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kiosk': {
+      id: '/kiosk'
+      path: '/kiosk'
+      fullPath: '/kiosk'
+      preLoaderRoute: typeof KioskRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -395,6 +427,13 @@ declare module '@tanstack/react-router' {
       path: '/receipts'
       fullPath: '/portal/receipts'
       preLoaderRoute: typeof PortalReceiptsRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
+    '/portal/kiosks': {
+      id: '/portal/kiosks'
+      path: '/kiosks'
+      fullPath: '/portal/kiosks'
+      preLoaderRoute: typeof PortalKiosksRouteImport
       parentRoute: typeof PortalRouteRoute
     }
     '/portal/jobs': {
@@ -482,6 +521,7 @@ interface PortalRouteRouteChildren {
   PortalCustomersRoute: typeof PortalCustomersRoute
   PortalEmployeesRoute: typeof PortalEmployeesRoute
   PortalJobsRoute: typeof PortalJobsRoute
+  PortalKiosksRoute: typeof PortalKiosksRoute
   PortalReceiptsRoute: typeof PortalReceiptsRoute
   PortalReportsRoute: typeof PortalReportsRoute
   PortalServicesRoute: typeof PortalServicesRoute
@@ -501,6 +541,7 @@ const PortalRouteRouteChildren: PortalRouteRouteChildren = {
   PortalCustomersRoute: PortalCustomersRoute,
   PortalEmployeesRoute: PortalEmployeesRoute,
   PortalJobsRoute: PortalJobsRoute,
+  PortalKiosksRoute: PortalKiosksRoute,
   PortalReceiptsRoute: PortalReceiptsRoute,
   PortalReportsRoute: PortalReportsRoute,
   PortalServicesRoute: PortalServicesRoute,
@@ -523,6 +564,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PortalRouteRoute: PortalRouteRouteWithChildren,
   ContactRoute: ContactRoute,
+  KioskRoute: KioskRoute,
   PartnersRoute: PartnersRoute,
   QuotationRoute: QuotationRoute,
   ServicesRoute: ServicesRoute,
