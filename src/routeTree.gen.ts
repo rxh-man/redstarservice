@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as QuotationRouteImport } from './routes/quotation'
 import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as KioskRouteImport } from './routes/kiosk'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as PortalRouteRouteImport } from './routes/portal/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -46,6 +47,11 @@ const QuotationRoute = QuotationRouteImport.update({
 const PartnersRoute = PartnersRouteImport.update({
   id: '/partners',
   path: '/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KioskRoute = KioskRouteImport.update({
+  id: '/kiosk',
+  path: '/kiosk',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -153,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/portal': typeof PortalRouteRouteWithChildren
   '/contact': typeof ContactRoute
+  '/kiosk': typeof KioskRoute
   '/partners': typeof PartnersRoute
   '/quotation': typeof QuotationRoute
   '/services': typeof ServicesRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/kiosk': typeof KioskRoute
   '/partners': typeof PartnersRoute
   '/quotation': typeof QuotationRoute
   '/services': typeof ServicesRoute
@@ -203,6 +211,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/portal': typeof PortalRouteRouteWithChildren
   '/contact': typeof ContactRoute
+  '/kiosk': typeof KioskRoute
   '/partners': typeof PartnersRoute
   '/quotation': typeof QuotationRoute
   '/services': typeof ServicesRoute
@@ -230,6 +239,7 @@ export interface FileRouteTypes {
     | '/'
     | '/portal'
     | '/contact'
+    | '/kiosk'
     | '/partners'
     | '/quotation'
     | '/services'
@@ -254,6 +264,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contact'
+    | '/kiosk'
     | '/partners'
     | '/quotation'
     | '/services'
@@ -279,6 +290,7 @@ export interface FileRouteTypes {
     | '/'
     | '/portal'
     | '/contact'
+    | '/kiosk'
     | '/partners'
     | '/quotation'
     | '/services'
@@ -305,6 +317,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PortalRouteRoute: typeof PortalRouteRouteWithChildren
   ContactRoute: typeof ContactRoute
+  KioskRoute: typeof KioskRoute
   PartnersRoute: typeof PartnersRoute
   QuotationRoute: typeof QuotationRoute
   ServicesRoute: typeof ServicesRoute
@@ -332,6 +345,13 @@ declare module '@tanstack/react-router' {
       path: '/partners'
       fullPath: '/partners'
       preLoaderRoute: typeof PartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kiosk': {
+      id: '/kiosk'
+      path: '/kiosk'
+      fullPath: '/kiosk'
+      preLoaderRoute: typeof KioskRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -523,6 +543,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PortalRouteRoute: PortalRouteRouteWithChildren,
   ContactRoute: ContactRoute,
+  KioskRoute: KioskRoute,
   PartnersRoute: PartnersRoute,
   QuotationRoute: QuotationRoute,
   ServicesRoute: ServicesRoute,
