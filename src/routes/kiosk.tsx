@@ -16,6 +16,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import logo from "@/assets/red-star-logo.png";
+import tripluxAsset from "@/assets/triplux-logo.jpg.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
