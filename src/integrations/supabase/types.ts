@@ -371,6 +371,119 @@ export type Database = {
           },
         ]
       }
+      kiosk_requests: {
+        Row: {
+          category: string
+          created_at: string
+          created_by: string | null
+          details: string | null
+          id: string
+          staff_reply: string | null
+          status: string
+          subject: string
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          details?: string | null
+          id?: string
+          staff_reply?: string | null
+          status?: string
+          subject: string
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          details?: string | null
+          id?: string
+          staff_reply?: string | null
+          status?: string
+          subject?: string
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "kiosk_requests_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "kiosk_vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      kiosk_vendors: {
+        Row: {
+          active: boolean
+          business_type: string | null
+          code: string
+          contact_person: string | null
+          created_at: string
+          email: string | null
+          id: string
+          kiosk_no: string | null
+          license_expiry: string | null
+          name: string
+          next_payment_date: string | null
+          notes: string | null
+          payment_cycle: string
+          phone: string | null
+          rent_amount: number
+          rent_start_date: string | null
+          trade_license_no: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          active?: boolean
+          business_type?: string | null
+          code: string
+          contact_person?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          kiosk_no?: string | null
+          license_expiry?: string | null
+          name: string
+          next_payment_date?: string | null
+          notes?: string | null
+          payment_cycle?: string
+          phone?: string | null
+          rent_amount?: number
+          rent_start_date?: string | null
+          trade_license_no?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          active?: boolean
+          business_type?: string | null
+          code?: string
+          contact_person?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          kiosk_no?: string | null
+          license_expiry?: string | null
+          name?: string
+          next_payment_date?: string | null
+          notes?: string | null
+          payment_cycle?: string
+          phone?: string | null
+          rent_amount?: number
+          rent_start_date?: string | null
+          trade_license_no?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           active: boolean
@@ -917,7 +1030,7 @@ export type Database = {
       recalc_invoice: { Args: { _invoice_id: string }; Returns: undefined }
     }
     Enums: {
-      app_role: "admin" | "accountant" | "typist"
+      app_role: "admin" | "accountant" | "typist" | "vendor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1045,7 +1158,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "accountant", "typist"],
+      app_role: ["admin", "accountant", "typist", "vendor"],
     },
   },
 } as const
