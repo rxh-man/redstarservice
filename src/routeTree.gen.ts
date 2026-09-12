@@ -22,6 +22,7 @@ import { Route as PortalSettingsRouteImport } from './routes/portal/settings'
 import { Route as PortalServicesRouteImport } from './routes/portal/services'
 import { Route as PortalReportsRouteImport } from './routes/portal/reports'
 import { Route as PortalReceiptsRouteImport } from './routes/portal/receipts'
+import { Route as PortalKiosksRouteImport } from './routes/portal/kiosks'
 import { Route as PortalJobsRouteImport } from './routes/portal/jobs'
 import { Route as PortalEmployeesRouteImport } from './routes/portal/employees'
 import { Route as PortalCustomersRouteImport } from './routes/portal/customers'
@@ -99,6 +100,11 @@ const PortalReceiptsRoute = PortalReceiptsRouteImport.update({
   path: '/receipts',
   getParentRoute: () => PortalRouteRoute,
 } as any)
+const PortalKiosksRoute = PortalKiosksRouteImport.update({
+  id: '/kiosks',
+  path: '/kiosks',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
 const PortalJobsRoute = PortalJobsRouteImport.update({
   id: '/jobs',
   path: '/jobs',
@@ -168,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
+  '/portal/kiosks': typeof PortalKiosksRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
+  '/portal/kiosks': typeof PortalKiosksRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
@@ -220,6 +228,7 @@ export interface FileRoutesById {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
+  '/portal/kiosks': typeof PortalKiosksRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
@@ -248,6 +257,7 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/employees'
     | '/portal/jobs'
+    | '/portal/kiosks'
     | '/portal/receipts'
     | '/portal/reports'
     | '/portal/services'
@@ -273,6 +283,7 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/employees'
     | '/portal/jobs'
+    | '/portal/kiosks'
     | '/portal/receipts'
     | '/portal/reports'
     | '/portal/services'
@@ -299,6 +310,7 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/employees'
     | '/portal/jobs'
+    | '/portal/kiosks'
     | '/portal/receipts'
     | '/portal/reports'
     | '/portal/services'
@@ -417,6 +429,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalReceiptsRouteImport
       parentRoute: typeof PortalRouteRoute
     }
+    '/portal/kiosks': {
+      id: '/portal/kiosks'
+      path: '/kiosks'
+      fullPath: '/portal/kiosks'
+      preLoaderRoute: typeof PortalKiosksRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
     '/portal/jobs': {
       id: '/portal/jobs'
       path: '/jobs'
@@ -502,6 +521,7 @@ interface PortalRouteRouteChildren {
   PortalCustomersRoute: typeof PortalCustomersRoute
   PortalEmployeesRoute: typeof PortalEmployeesRoute
   PortalJobsRoute: typeof PortalJobsRoute
+  PortalKiosksRoute: typeof PortalKiosksRoute
   PortalReceiptsRoute: typeof PortalReceiptsRoute
   PortalReportsRoute: typeof PortalReportsRoute
   PortalServicesRoute: typeof PortalServicesRoute
@@ -521,6 +541,7 @@ const PortalRouteRouteChildren: PortalRouteRouteChildren = {
   PortalCustomersRoute: PortalCustomersRoute,
   PortalEmployeesRoute: PortalEmployeesRoute,
   PortalJobsRoute: PortalJobsRoute,
+  PortalKiosksRoute: PortalKiosksRoute,
   PortalReceiptsRoute: PortalReceiptsRoute,
   PortalReportsRoute: PortalReportsRoute,
   PortalServicesRoute: PortalServicesRoute,
