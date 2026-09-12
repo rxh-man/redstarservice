@@ -123,7 +123,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const { pathname } = useLocation();
-  const isPortal = pathname.startsWith("/portal");
+  const isPortal = pathname.startsWith("/portal") || pathname.startsWith("/kiosk");
 
   return (
     <QueryClientProvider client={queryClient}>
