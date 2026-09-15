@@ -99,7 +99,12 @@ function InvoicesPage() {
     <div>
       <PortalHeading
         title="Invoices"
-        subtitle="Tax invoices with service fees, government fees and 5% VAT."
+        subtitle={
+          todayOnly
+            ? "Today's invoices only — service fees, government fees and 5% VAT."
+            : "Tax invoices with service fees, government fees and 5% VAT."
+        }
+
         actions={
           isAccountant ? (
             <Button onClick={() => setOpen(true)}>
