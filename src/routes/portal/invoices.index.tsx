@@ -179,7 +179,7 @@ function InvoicesPage() {
             {filtered.length === 0 ? (
               <tr>
                 <td colSpan={8} className="px-4 py-10 text-center text-muted-foreground">
-                  No invoices yet.
+                  {todayOnly ? "No invoices raised today yet." : "No invoices yet."}
                 </td>
               </tr>
             ) : null}
