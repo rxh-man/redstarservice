@@ -19,29 +19,36 @@ import {
 export const Route = createFileRoute("/portal/invoices/")({ component: InvoicesPage });
 
 function InvoicesPage() {
-  const { isAdmin, isAccountant, session } = usePortal();
+  const { isAdmin, isAccountant, isTypist, session } = usePortal();
   const qc = useQueryClient();
   const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
   const [customerId, setCustomerId] = useState("");
-  const [issueDate, setIssueDate] = useState(new Date().toISOString().slice(0, 10));
+  const today = new Date().toISOString().slice(0, 10);
+  const [issueDate, setIssueDate] = useState(today);
   const [dueDate, setDueDate] = useState("");
 
+  // Typists only see invoices issued today — yesterday's billing is out of view.
+  const todayOnly = isTypist && !isAdmin && !isAccountant;
+
   const { data } = useQuery({
-    queryKey: ["portal", "invoices"],
+    queryKey: ["portal", "invoices", todayOnly ? today : "all"],
     queryFn: async () => {
+      let invQuery = supabase
+        .from("invoices")
+        .select("id, invoice_no, customer_id, issue_date, due_date, status, total, paid_amount")
+        .order("issue_date", { ascending: false });
+      if (todayOnly) invQuery = invQuery.eq("issue_date", today);
       const [inv, cust] = await Promise.all([
-        supabase
-          .from("invoices")
-          .select("id, invoice_no, customer_id, issue_date, due_date, status, total, paid_amount")
-          .order("issue_date", { ascending: false }),
+        invQuery,
         supabase.from("customers").select("id, name").order("name"),
       ]);
       if (inv.error) throw inv.error;
       return { invoices: inv.data, customers: cust.data ?? [] };
     },
   });
+
 
   const invoices = data?.invoices ?? [];
   const customers = data?.customers ?? [];
