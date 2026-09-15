@@ -105,7 +105,7 @@ function InvoicesPage() {
         title="Invoices"
         subtitle={
           todayOnly
-            ? "Today's invoices only — service fees, government fees and 5% VAT."
+            ? "Your invoices from today only — service fees, government fees and 5% VAT."
             : "Tax invoices with service fees, government fees and 5% VAT."
         }
 
