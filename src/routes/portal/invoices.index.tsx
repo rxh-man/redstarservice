@@ -29,17 +29,21 @@ function InvoicesPage() {
   const [issueDate, setIssueDate] = useState(today);
   const [dueDate, setDueDate] = useState("");
 
-  // Typists only see invoices issued today — yesterday's billing is out of view.
+  // Typists only see their own invoices, issued today — no admin-style view.
   const todayOnly = isTypist && !isAdmin && !isAccountant;
 
   const { data } = useQuery({
-    queryKey: ["portal", "invoices", todayOnly ? today : "all"],
+    queryKey: ["portal", "invoices", todayOnly ? `${today}:${session?.user.id}` : "all"],
     queryFn: async () => {
       let invQuery = supabase
         .from("invoices")
         .select("id, invoice_no, customer_id, issue_date, due_date, status, total, paid_amount")
         .order("issue_date", { ascending: false });
-      if (todayOnly) invQuery = invQuery.eq("issue_date", today);
+      if (todayOnly) {
+        invQuery = invQuery
+          .eq("issue_date", today)
+          .eq("created_by", session?.user.id ?? "");
+      }
       const [inv, cust] = await Promise.all([
         invQuery,
         supabase.from("customers").select("id, name").order("name"),
