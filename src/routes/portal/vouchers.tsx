@@ -28,7 +28,7 @@ export const Route = createFileRoute("/portal/vouchers")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: VouchersPage;
+  component: VouchersPage,
 });
 
 type Voucher = {
