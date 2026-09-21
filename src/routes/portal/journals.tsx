@@ -387,15 +387,36 @@ function JournalsPage() {
 
       <Dialog open={!!viewId} onOpenChange={(v) => setViewId(v ? viewId : null)}>
         <DialogContent className="max-w-2xl">
-          <DialogHeader>
+          <DialogHeader className="print:hidden">
             <DialogTitle>{viewing?.entry_no ?? "Journal"}</DialogTitle>
           </DialogHeader>
           <div className="text-sm">
-            <p className="mb-3 text-muted-foreground">
-              {fmtDate(viewing?.entry_date)} · {viewing?.memo ?? "No memo"}
-            </p>
+            <div className="flex flex-wrap items-start justify-between gap-6 border-b border-border pb-4">
+              <div className="flex items-center gap-4">
+                <img src={logo} alt="Red Star Services" className="h-14 w-auto object-contain" />
+                <div>
+                  <div className="text-base font-semibold">{settings?.company_name ?? "Red Star Services"}</div>
+                  <div className="text-xs text-muted-foreground">{settings?.address}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {settings?.phone} · {settings?.email}
+                  </div>
+                  <div className="text-xs text-muted-foreground">TRN: {settings?.trn}</div>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-red)]">
+                  Journal Voucher
+                </div>
+                <div className="mt-1 text-lg font-semibold">{viewing?.entry_no}</div>
+                <div className="text-xs text-muted-foreground">{fmtDate(viewing?.entry_date)}</div>
+                {viewing?.reference ? (
+                  <div className="text-xs text-muted-foreground">Ref: {viewing.reference}</div>
+                ) : null}
+              </div>
+            </div>
+            <p className="py-4 text-muted-foreground">{viewing?.memo ?? "No memo"}</p>
             <table className="w-full text-sm">
-              <thead className="border-b border-border text-left text-xs uppercase text-muted-foreground">
+              <thead className="border-y border-border text-left text-xs uppercase text-muted-foreground">
                 <tr>
                   <th className="py-2">Account</th>
                   <th className="py-2">Narration</th>
@@ -406,7 +427,7 @@ function JournalsPage() {
               <tbody className="divide-y divide-border">
                 {(viewLines ?? []).map((l) => (
                   <tr key={l.id}>
-                    <td className="py-2 font-mono text-xs">{l.account_code}</td>
+                    <td className="py-2">{accountName(l.account_code)}</td>
                     <td className="py-2">{l.description ?? "—"}</td>
                     <td className="py-2 text-right">{Number(l.debit) ? AED(l.debit) : "—"}</td>
                     <td className="py-2 text-right">{Number(l.credit) ? AED(l.credit) : "—"}</td>
