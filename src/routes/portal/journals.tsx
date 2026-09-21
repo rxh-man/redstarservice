@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Plus, Trash2, CheckCircle2, Eye, X } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import logo from "@/assets/red-star-logo.png";
 import { AED, Panel, PortalHeading, StatusBadge, fmtDate, usePortal } from "@/lib/portal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -60,20 +61,30 @@ function JournalsPage() {
   const { data } = useQuery({
     queryKey: ["portal", "journals"],
     queryFn: async () => {
-      const [ent, acc] = await Promise.all([
+      const [ent, acc, set] = await Promise.all([
         supabase
           .from("journal_entries")
           .select("id, entry_no, entry_date, reference, memo, status, total_debit, total_credit")
           .order("entry_date", { ascending: false }),
         supabase.from("accounts").select("code, name").eq("active", true).order("code"),
+        supabase.from("settings").select("company_name, address, phone, email, trn").maybeSingle(),
       ]);
       if (ent.error) throw ent.error;
-      return { entries: (ent.data ?? []) as Entry[], accounts: acc.data ?? [] };
+      return {
+        entries: (ent.data ?? []) as Entry[],
+        accounts: acc.data ?? [],
+        settings: set.data as
+          | { company_name: string | null; address: string | null; phone: string | null; email: string | null; trn: string | null }
+          | null,
+      };
     },
   });
 
   const entries = data?.entries ?? [];
   const accounts = data?.accounts ?? [];
+  const settings = data?.settings ?? null;
+  const accountName = (code: string | null) =>
+    accounts.find((a) => a.code === code)?.name ?? code ?? "—";
 
   const { data: viewLines } = useQuery({
     queryKey: ["portal", "journal-lines", viewId],
@@ -377,15 +388,36 @@ function JournalsPage() {
 
       <Dialog open={!!viewId} onOpenChange={(v) => setViewId(v ? viewId : null)}>
         <DialogContent className="max-w-2xl">
-          <DialogHeader>
+          <DialogHeader className="print:hidden">
             <DialogTitle>{viewing?.entry_no ?? "Journal"}</DialogTitle>
           </DialogHeader>
           <div className="text-sm">
-            <p className="mb-3 text-muted-foreground">
-              {fmtDate(viewing?.entry_date)} · {viewing?.memo ?? "No memo"}
-            </p>
+            <div className="flex flex-wrap items-start justify-between gap-6 border-b border-border pb-4">
+              <div className="flex items-center gap-4">
+                <img src={logo} alt="Red Star Services" className="h-14 w-auto object-contain" />
+                <div>
+                  <div className="text-base font-semibold">{settings?.company_name ?? "Red Star Services"}</div>
+                  <div className="text-xs text-muted-foreground">{settings?.address}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {settings?.phone} · {settings?.email}
+                  </div>
+                  <div className="text-xs text-muted-foreground">TRN: {settings?.trn}</div>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-red)]">
+                  Journal Voucher
+                </div>
+                <div className="mt-1 text-lg font-semibold">{viewing?.entry_no}</div>
+                <div className="text-xs text-muted-foreground">{fmtDate(viewing?.entry_date)}</div>
+                {viewing?.reference ? (
+                  <div className="text-xs text-muted-foreground">Ref: {viewing.reference}</div>
+                ) : null}
+              </div>
+            </div>
+            <p className="py-4 text-muted-foreground">{viewing?.memo ?? "No memo"}</p>
             <table className="w-full text-sm">
-              <thead className="border-b border-border text-left text-xs uppercase text-muted-foreground">
+              <thead className="border-y border-border text-left text-xs uppercase text-muted-foreground">
                 <tr>
                   <th className="py-2">Account</th>
                   <th className="py-2">Narration</th>
@@ -396,16 +428,23 @@ function JournalsPage() {
               <tbody className="divide-y divide-border">
                 {(viewLines ?? []).map((l) => (
                   <tr key={l.id}>
-                    <td className="py-2 font-mono text-xs">{l.account_code}</td>
+                    <td className="py-2">{accountName(l.account_code)}</td>
                     <td className="py-2">{l.description ?? "—"}</td>
                     <td className="py-2 text-right">{Number(l.debit) ? AED(l.debit) : "—"}</td>
                     <td className="py-2 text-right">{Number(l.credit) ? AED(l.credit) : "—"}</td>
                   </tr>
                 ))}
               </tbody>
+              <tfoot className="border-t border-border font-semibold">
+                <tr>
+                  <td className="py-2" colSpan={2}>Total</td>
+                  <td className="py-2 text-right">{AED(viewing?.total_debit ?? 0)}</td>
+                  <td className="py-2 text-right">{AED(viewing?.total_credit ?? 0)}</td>
+                </tr>
+              </tfoot>
             </table>
           </div>
-          <DialogFooter>
+          <DialogFooter className="print:hidden">
             <Button variant="outline" onClick={() => setViewId(null)}>
               Close
             </Button>
