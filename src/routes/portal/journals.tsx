@@ -60,7 +60,7 @@ function JournalsPage() {
   const { data } = useQuery({
     queryKey: ["portal", "journals"],
     queryFn: async () => {
-      const [ent, acc] = await Promise.all([
+      const [ent, acc, set] = await Promise.all([
         supabase
           .from("journal_entries")
           .select("id, entry_no, entry_date, reference, memo, status, total_debit, total_credit")
