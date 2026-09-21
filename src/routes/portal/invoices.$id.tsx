@@ -22,7 +22,7 @@ export const Route = createFileRoute("/portal/invoices/$id")({ component: Invoic
 
 function InvoiceDetail() {
   const { id } = Route.useParams();
-  const { isAdmin, isAccountant, session } = usePortal();
+  const { isAdmin, isAccountant, isTypist, session } = usePortal();
   const qc = useQueryClient();
   const [itemOpen, setItemOpen] = useState(false);
   const [payOpen, setPayOpen] = useState(false);
@@ -174,6 +174,7 @@ function InvoiceDetail() {
   const balance = Math.round((Number(inv.total) - Number(inv.paid_amount)) * 100) / 100;
   const locked = inv.status === "cancelled" || inv.status === "paid";
   const canCollect = inv.status !== "cancelled" && balance > 0;
+  const canEditItems = isAccountant || isTypist;
 
   return (
     <div>
