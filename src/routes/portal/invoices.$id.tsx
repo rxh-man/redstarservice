@@ -318,7 +318,7 @@ function InvoiceDetail() {
                     {AED(Number(it.qty) * Number(it.unit_price) + Number(it.govt_fee))}
                   </td>
                   <td className="px-2 py-3 text-right print:hidden">
-                    {isAccountant && !locked ? (
+                    {canEditItems && !locked ? (
                       <button
                         onClick={() => {
                           if (confirm("Remove this line item?")) delItem.mutate(it.id);
