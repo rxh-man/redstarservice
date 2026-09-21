@@ -22,7 +22,7 @@ export const Route = createFileRoute("/portal/invoices/$id")({ component: Invoic
 
 function InvoiceDetail() {
   const { id } = Route.useParams();
-  const { isAdmin, isAccountant, session } = usePortal();
+  const { isAdmin, isAccountant, isTypist, session } = usePortal();
   const qc = useQueryClient();
   const [itemOpen, setItemOpen] = useState(false);
   const [payOpen, setPayOpen] = useState(false);
@@ -174,6 +174,7 @@ function InvoiceDetail() {
   const balance = Math.round((Number(inv.total) - Number(inv.paid_amount)) * 100) / 100;
   const locked = inv.status === "cancelled" || inv.status === "paid";
   const canCollect = inv.status !== "cancelled" && balance > 0;
+  const canEditItems = isAccountant || isTypist;
 
   return (
     <div>
@@ -184,7 +185,7 @@ function InvoiceDetail() {
           </Link>
         </Button>
         <div className="flex flex-wrap gap-2">
-          {isAccountant ? (
+          {canEditItems ? (
             <>
               <Button
                 size="sm"
@@ -194,9 +195,6 @@ function InvoiceDetail() {
                 onClick={() => setItemOpen(true)}
               >
                 <Plus className="mr-2 h-4 w-4" /> Line item
-              </Button>
-              <Button size="sm" variant="outline" disabled={!canCollect} onClick={() => setPayOpen(true)}>
-                <BadgeCheck className="mr-2 h-4 w-4" /> Record payment
               </Button>
               {inv.status === "draft" ? (
                 <Button
@@ -209,6 +207,13 @@ function InvoiceDetail() {
                   Mark as sent
                 </Button>
               ) : null}
+            </>
+          ) : null}
+          {isAccountant ? (
+            <>
+              <Button size="sm" variant="outline" disabled={!canCollect} onClick={() => setPayOpen(true)}>
+                <BadgeCheck className="mr-2 h-4 w-4" /> Record payment
+              </Button>
               {inv.status !== "cancelled" && isAdmin ? (
                 <Button
                   size="sm"
@@ -313,7 +318,7 @@ function InvoiceDetail() {
                     {AED(Number(it.qty) * Number(it.unit_price) + Number(it.govt_fee))}
                   </td>
                   <td className="px-2 py-3 text-right print:hidden">
-                    {isAccountant && !locked ? (
+                    {canEditItems && !locked ? (
                       <button
                         onClick={() => {
                           if (confirm("Remove this line item?")) delItem.mutate(it.id);

@@ -120,6 +120,9 @@ export const statusTone: Record<string, string> = {
   submitted: "bg-indigo-100 text-indigo-800",
   completed: "bg-emerald-100 text-emerald-800",
   rejected: "bg-red-100 text-red-800",
+  posted: "bg-emerald-100 text-emerald-800",
+  approved: "bg-blue-100 text-blue-800",
+  pending: "bg-amber-100 text-amber-800",
 };
 
 export function StatusBadge({ value }: { value: string }) {

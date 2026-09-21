@@ -371,6 +371,89 @@ export type Database = {
           },
         ]
       }
+      journal_entries: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          entry_date: string
+          entry_no: string
+          id: string
+          memo: string | null
+          reference: string | null
+          status: string
+          total_credit: number
+          total_debit: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          entry_date?: string
+          entry_no?: string
+          id?: string
+          memo?: string | null
+          reference?: string | null
+          status?: string
+          total_credit?: number
+          total_debit?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          entry_date?: string
+          entry_no?: string
+          id?: string
+          memo?: string | null
+          reference?: string | null
+          status?: string
+          total_credit?: number
+          total_debit?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      journal_lines: {
+        Row: {
+          account_code: string
+          created_at: string
+          credit: number
+          debit: number
+          description: string | null
+          entry_id: string
+          id: string
+          sort_order: number
+        }
+        Insert: {
+          account_code: string
+          created_at?: string
+          credit?: number
+          debit?: number
+          description?: string | null
+          entry_id: string
+          id?: string
+          sort_order?: number
+        }
+        Update: {
+          account_code?: string
+          created_at?: string
+          credit?: number
+          debit?: number
+          description?: string | null
+          entry_id?: string
+          id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journal_lines_entry_id_fkey"
+            columns: ["entry_id"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       kiosk_requests: {
         Row: {
           category: string
@@ -484,6 +567,57 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_vouchers: {
+        Row: {
+          account_code: string | null
+          amount: number
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          method: string
+          payee: string
+          payee_type: string
+          reference: string | null
+          status: string
+          updated_at: string
+          voucher_date: string
+          voucher_no: string
+        }
+        Insert: {
+          account_code?: string | null
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          method?: string
+          payee: string
+          payee_type?: string
+          reference?: string | null
+          status?: string
+          updated_at?: string
+          voucher_date?: string
+          voucher_no?: string
+        }
+        Update: {
+          account_code?: string | null
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          method?: string
+          payee?: string
+          payee_type?: string
+          reference?: string | null
+          status?: string
+          updated_at?: string
+          voucher_date?: string
+          voucher_no?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           active: boolean
@@ -577,6 +711,74 @@ export type Database = {
           },
         ]
       }
+      salary_payments: {
+        Row: {
+          allowances: number
+          basic_salary: number
+          created_at: string
+          created_by: string | null
+          deductions: number
+          id: string
+          method: string
+          net_pay: number
+          notes: string | null
+          paid_on: string | null
+          payment_no: string
+          period_month: string
+          reference: string | null
+          salary_id: string | null
+          staff_name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          allowances?: number
+          basic_salary?: number
+          created_at?: string
+          created_by?: string | null
+          deductions?: number
+          id?: string
+          method?: string
+          net_pay?: number
+          notes?: string | null
+          paid_on?: string | null
+          payment_no?: string
+          period_month: string
+          reference?: string | null
+          salary_id?: string | null
+          staff_name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          allowances?: number
+          basic_salary?: number
+          created_at?: string
+          created_by?: string | null
+          deductions?: number
+          id?: string
+          method?: string
+          net_pay?: number
+          notes?: string | null
+          paid_on?: string | null
+          payment_no?: string
+          period_month?: string
+          reference?: string | null
+          salary_id?: string | null
+          staff_name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "salary_payments_salary_id_fkey"
+            columns: ["salary_id"]
+            isOneToOne: false
+            referencedRelation: "staff_salaries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       services: {
         Row: {
           active: boolean
@@ -663,6 +865,59 @@ export type Database = {
           vat_rate?: number
         }
         Relationships: []
+      }
+      staff_salaries: {
+        Row: {
+          active: boolean
+          allowances: number
+          bank_account: string | null
+          basic_salary: number
+          created_at: string
+          designation: string | null
+          effective_from: string
+          id: string
+          notes: string | null
+          profile_id: string | null
+          staff_name: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          allowances?: number
+          bank_account?: string | null
+          basic_salary?: number
+          created_at?: string
+          designation?: string | null
+          effective_from?: string
+          id?: string
+          notes?: string | null
+          profile_id?: string | null
+          staff_name: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          allowances?: number
+          bank_account?: string | null
+          basic_salary?: number
+          created_at?: string
+          designation?: string | null
+          effective_from?: string
+          id?: string
+          notes?: string | null
+          profile_id?: string | null
+          staff_name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "staff_salaries_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       typing_jobs: {
         Row: {
@@ -1028,6 +1283,7 @@ export type Database = {
         Returns: Database["public"]["Enums"]["app_role"][]
       }
       recalc_invoice: { Args: { _invoice_id: string }; Returns: undefined }
+      recalc_journal: { Args: { _entry_id: string }; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "accountant" | "typist" | "vendor"

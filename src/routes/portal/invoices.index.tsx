@@ -110,7 +110,7 @@ function InvoicesPage() {
         }
 
         actions={
-          isAccountant ? (
+          isAccountant || isTypist ? (
             <Button onClick={() => setOpen(true)}>
               <Plus className="mr-2 h-4 w-4" /> New invoice
             </Button>
