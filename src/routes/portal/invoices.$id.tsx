@@ -184,7 +184,7 @@ function InvoiceDetail() {
           </Link>
         </Button>
         <div className="flex flex-wrap gap-2">
-          {isAccountant ? (
+          {canEditItems ? (
             <>
               <Button
                 size="sm"
@@ -194,9 +194,6 @@ function InvoiceDetail() {
                 onClick={() => setItemOpen(true)}
               >
                 <Plus className="mr-2 h-4 w-4" /> Line item
-              </Button>
-              <Button size="sm" variant="outline" disabled={!canCollect} onClick={() => setPayOpen(true)}>
-                <BadgeCheck className="mr-2 h-4 w-4" /> Record payment
               </Button>
               {inv.status === "draft" ? (
                 <Button
@@ -209,6 +206,13 @@ function InvoiceDetail() {
                   Mark as sent
                 </Button>
               ) : null}
+            </>
+          ) : null}
+          {isAccountant ? (
+            <>
+              <Button size="sm" variant="outline" disabled={!canCollect} onClick={() => setPayOpen(true)}>
+                <BadgeCheck className="mr-2 h-4 w-4" /> Record payment
+              </Button>
               {inv.status !== "cancelled" && isAdmin ? (
                 <Button
                   size="sm"
