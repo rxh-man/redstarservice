@@ -66,14 +66,24 @@ function JournalsPage() {
           .select("id, entry_no, entry_date, reference, memo, status, total_debit, total_credit")
           .order("entry_date", { ascending: false }),
         supabase.from("accounts").select("code, name").eq("active", true).order("code"),
+        supabase.from("settings").select("company_name, address, phone, email, trn").maybeSingle(),
       ]);
       if (ent.error) throw ent.error;
-      return { entries: (ent.data ?? []) as Entry[], accounts: acc.data ?? [] };
+      return {
+        entries: (ent.data ?? []) as Entry[],
+        accounts: acc.data ?? [],
+        settings: set.data as
+          | { company_name: string | null; address: string | null; phone: string | null; email: string | null; trn: string | null }
+          | null,
+      };
     },
   });
 
   const entries = data?.entries ?? [];
   const accounts = data?.accounts ?? [];
+  const settings = data?.settings ?? null;
+  const accountName = (code: string | null) =>
+    accounts.find((a) => a.code === code)?.name ?? code ?? "—";
 
   const { data: viewLines } = useQuery({
     queryKey: ["portal", "journal-lines", viewId],
