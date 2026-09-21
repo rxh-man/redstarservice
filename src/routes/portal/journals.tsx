@@ -435,9 +435,16 @@ function JournalsPage() {
                   </tr>
                 ))}
               </tbody>
+              <tfoot className="border-t border-border font-semibold">
+                <tr>
+                  <td className="py-2" colSpan={2}>Total</td>
+                  <td className="py-2 text-right">{AED(viewing?.total_debit ?? 0)}</td>
+                  <td className="py-2 text-right">{AED(viewing?.total_credit ?? 0)}</td>
+                </tr>
+              </tfoot>
             </table>
           </div>
-          <DialogFooter>
+          <DialogFooter className="print:hidden">
             <Button variant="outline" onClick={() => setViewId(null)}>
               Close
             </Button>
