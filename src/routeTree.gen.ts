@@ -17,12 +17,15 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as PortalRouteRouteImport } from './routes/portal/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortalIndexRouteImport } from './routes/portal/index'
+import { Route as PortalVouchersRouteImport } from './routes/portal/vouchers'
 import { Route as PortalStaffRouteImport } from './routes/portal/staff'
 import { Route as PortalSettingsRouteImport } from './routes/portal/settings'
 import { Route as PortalServicesRouteImport } from './routes/portal/services'
 import { Route as PortalReportsRouteImport } from './routes/portal/reports'
 import { Route as PortalReceiptsRouteImport } from './routes/portal/receipts'
+import { Route as PortalPayrollRouteImport } from './routes/portal/payroll'
 import { Route as PortalKiosksRouteImport } from './routes/portal/kiosks'
+import { Route as PortalJournalsRouteImport } from './routes/portal/journals'
 import { Route as PortalJobsRouteImport } from './routes/portal/jobs'
 import { Route as PortalEmployeesRouteImport } from './routes/portal/employees'
 import { Route as PortalCustomersRouteImport } from './routes/portal/customers'
@@ -75,6 +78,11 @@ const PortalIndexRoute = PortalIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PortalRouteRoute,
 } as any)
+const PortalVouchersRoute = PortalVouchersRouteImport.update({
+  id: '/vouchers',
+  path: '/vouchers',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
 const PortalStaffRoute = PortalStaffRouteImport.update({
   id: '/staff',
   path: '/staff',
@@ -100,9 +108,19 @@ const PortalReceiptsRoute = PortalReceiptsRouteImport.update({
   path: '/receipts',
   getParentRoute: () => PortalRouteRoute,
 } as any)
+const PortalPayrollRoute = PortalPayrollRouteImport.update({
+  id: '/payroll',
+  path: '/payroll',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
 const PortalKiosksRoute = PortalKiosksRouteImport.update({
   id: '/kiosks',
   path: '/kiosks',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalJournalsRoute = PortalJournalsRouteImport.update({
+  id: '/journals',
+  path: '/journals',
   getParentRoute: () => PortalRouteRoute,
 } as any)
 const PortalJobsRoute = PortalJobsRouteImport.update({
@@ -174,12 +192,15 @@ export interface FileRoutesByFullPath {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
+  '/portal/journals': typeof PortalJournalsRoute
   '/portal/kiosks': typeof PortalKiosksRoute
+  '/portal/payroll': typeof PortalPayrollRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
+  '/portal/vouchers': typeof PortalVouchersRoute
   '/portal/': typeof PortalIndexRoute
   '/portal/companies/$id': typeof PortalCompaniesIdRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
@@ -200,12 +221,15 @@ export interface FileRoutesByTo {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
+  '/portal/journals': typeof PortalJournalsRoute
   '/portal/kiosks': typeof PortalKiosksRoute
+  '/portal/payroll': typeof PortalPayrollRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
+  '/portal/vouchers': typeof PortalVouchersRoute
   '/portal': typeof PortalIndexRoute
   '/portal/companies/$id': typeof PortalCompaniesIdRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
@@ -228,12 +252,15 @@ export interface FileRoutesById {
   '/portal/customers': typeof PortalCustomersRoute
   '/portal/employees': typeof PortalEmployeesRoute
   '/portal/jobs': typeof PortalJobsRoute
+  '/portal/journals': typeof PortalJournalsRoute
   '/portal/kiosks': typeof PortalKiosksRoute
+  '/portal/payroll': typeof PortalPayrollRoute
   '/portal/receipts': typeof PortalReceiptsRoute
   '/portal/reports': typeof PortalReportsRoute
   '/portal/services': typeof PortalServicesRoute
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/staff': typeof PortalStaffRoute
+  '/portal/vouchers': typeof PortalVouchersRoute
   '/portal/': typeof PortalIndexRoute
   '/portal/companies/$id': typeof PortalCompaniesIdRoute
   '/portal/invoices/$id': typeof PortalInvoicesIdRoute
@@ -257,12 +284,15 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/employees'
     | '/portal/jobs'
+    | '/portal/journals'
     | '/portal/kiosks'
+    | '/portal/payroll'
     | '/portal/receipts'
     | '/portal/reports'
     | '/portal/services'
     | '/portal/settings'
     | '/portal/staff'
+    | '/portal/vouchers'
     | '/portal/'
     | '/portal/companies/$id'
     | '/portal/invoices/$id'
@@ -283,12 +313,15 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/employees'
     | '/portal/jobs'
+    | '/portal/journals'
     | '/portal/kiosks'
+    | '/portal/payroll'
     | '/portal/receipts'
     | '/portal/reports'
     | '/portal/services'
     | '/portal/settings'
     | '/portal/staff'
+    | '/portal/vouchers'
     | '/portal'
     | '/portal/companies/$id'
     | '/portal/invoices/$id'
@@ -310,12 +343,15 @@ export interface FileRouteTypes {
     | '/portal/customers'
     | '/portal/employees'
     | '/portal/jobs'
+    | '/portal/journals'
     | '/portal/kiosks'
+    | '/portal/payroll'
     | '/portal/receipts'
     | '/portal/reports'
     | '/portal/services'
     | '/portal/settings'
     | '/portal/staff'
+    | '/portal/vouchers'
     | '/portal/'
     | '/portal/companies/$id'
     | '/portal/invoices/$id'
@@ -394,6 +430,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalIndexRouteImport
       parentRoute: typeof PortalRouteRoute
     }
+    '/portal/vouchers': {
+      id: '/portal/vouchers'
+      path: '/vouchers'
+      fullPath: '/portal/vouchers'
+      preLoaderRoute: typeof PortalVouchersRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
     '/portal/staff': {
       id: '/portal/staff'
       path: '/staff'
@@ -429,11 +472,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalReceiptsRouteImport
       parentRoute: typeof PortalRouteRoute
     }
+    '/portal/payroll': {
+      id: '/portal/payroll'
+      path: '/payroll'
+      fullPath: '/portal/payroll'
+      preLoaderRoute: typeof PortalPayrollRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
     '/portal/kiosks': {
       id: '/portal/kiosks'
       path: '/kiosks'
       fullPath: '/portal/kiosks'
       preLoaderRoute: typeof PortalKiosksRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
+    '/portal/journals': {
+      id: '/portal/journals'
+      path: '/journals'
+      fullPath: '/portal/journals'
+      preLoaderRoute: typeof PortalJournalsRouteImport
       parentRoute: typeof PortalRouteRoute
     }
     '/portal/jobs': {
@@ -521,12 +578,15 @@ interface PortalRouteRouteChildren {
   PortalCustomersRoute: typeof PortalCustomersRoute
   PortalEmployeesRoute: typeof PortalEmployeesRoute
   PortalJobsRoute: typeof PortalJobsRoute
+  PortalJournalsRoute: typeof PortalJournalsRoute
   PortalKiosksRoute: typeof PortalKiosksRoute
+  PortalPayrollRoute: typeof PortalPayrollRoute
   PortalReceiptsRoute: typeof PortalReceiptsRoute
   PortalReportsRoute: typeof PortalReportsRoute
   PortalServicesRoute: typeof PortalServicesRoute
   PortalSettingsRoute: typeof PortalSettingsRoute
   PortalStaffRoute: typeof PortalStaffRoute
+  PortalVouchersRoute: typeof PortalVouchersRoute
   PortalIndexRoute: typeof PortalIndexRoute
   PortalCompaniesIdRoute: typeof PortalCompaniesIdRoute
   PortalInvoicesIdRoute: typeof PortalInvoicesIdRoute
@@ -541,12 +601,15 @@ const PortalRouteRouteChildren: PortalRouteRouteChildren = {
   PortalCustomersRoute: PortalCustomersRoute,
   PortalEmployeesRoute: PortalEmployeesRoute,
   PortalJobsRoute: PortalJobsRoute,
+  PortalJournalsRoute: PortalJournalsRoute,
   PortalKiosksRoute: PortalKiosksRoute,
+  PortalPayrollRoute: PortalPayrollRoute,
   PortalReceiptsRoute: PortalReceiptsRoute,
   PortalReportsRoute: PortalReportsRoute,
   PortalServicesRoute: PortalServicesRoute,
   PortalSettingsRoute: PortalSettingsRoute,
   PortalStaffRoute: PortalStaffRoute,
+  PortalVouchersRoute: PortalVouchersRoute,
   PortalIndexRoute: PortalIndexRoute,
   PortalCompaniesIdRoute: PortalCompaniesIdRoute,
   PortalInvoicesIdRoute: PortalInvoicesIdRoute,

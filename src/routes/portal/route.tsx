@@ -18,6 +18,9 @@ import {
   UsersRound,
   ListChecks,
   Store,
+  NotebookPen,
+  Banknote,
+  Wallet,
 
 
 } from "lucide-react";
@@ -168,6 +171,10 @@ function PortalShell() {
     { to: "/portal/receipts", label: "Receipts", icon: Receipt, show: true },
     { to: "/portal/reports", label: "Reports", icon: BarChart3, show: isAccountant },
     { to: "/portal/accounts", label: "Chart of Accounts", icon: BookOpenCheck, show: isAccountant },
+    { to: "/portal/journals", label: "Journal Vouchers", icon: NotebookPen, show: isAccountant },
+    { to: "/portal/vouchers", label: "Payment Vouchers", icon: Banknote, show: isAccountant },
+    { to: "/portal/payroll", label: "Staff Salaries", icon: Wallet, show: isAccountant },
+
 
     { to: "/portal/jobs", label: "Typing Jobs", icon: Keyboard, show: true },
     { to: "/portal/kiosks", label: "Kiosk Vendors", icon: Store, show: isAccountant },
