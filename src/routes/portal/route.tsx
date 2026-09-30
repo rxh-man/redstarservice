@@ -21,8 +21,9 @@ import {
   NotebookPen,
   Banknote,
   Wallet,
-
-
+  LineChart,
+  Database,
+  History,
 } from "lucide-react";
 import logo from "@/assets/red-star-logo.png";
 import { supabase } from "@/integrations/supabase/client";
@@ -170,6 +171,7 @@ function PortalShell() {
     { to: "/portal/invoices", label: "Invoices", icon: FileText, show: true },
     { to: "/portal/receipts", label: "Receipts", icon: Receipt, show: true },
     { to: "/portal/reports", label: "Reports", icon: BarChart3, show: isAccountant },
+    { to: "/portal/financials", label: "Financial Statements", icon: LineChart, show: isAccountant },
     { to: "/portal/accounts", label: "Chart of Accounts", icon: BookOpenCheck, show: isAccountant },
     { to: "/portal/journals", label: "Journal Vouchers", icon: NotebookPen, show: isAccountant },
     { to: "/portal/vouchers", label: "Payment Vouchers", icon: Banknote, show: isAccountant },
@@ -180,6 +182,8 @@ function PortalShell() {
     { to: "/portal/kiosks", label: "Kiosk Vendors", icon: Store, show: isAccountant },
     { to: "/portal/services", label: "Service Catalogue", icon: BookOpenCheck, show: isAdmin },
     { to: "/portal/staff", label: "Staff & Roles", icon: ShieldCheck, show: isAdmin },
+    { to: "/portal/data", label: "Data Manager", icon: Database, show: isAdmin },
+    { to: "/portal/audit", label: "Audit Log", icon: History, show: isAdmin },
     { to: "/portal/settings", label: "Settings", icon: Settings, show: isAdmin },
   ].filter((n) => n.show);
 

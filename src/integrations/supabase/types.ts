@@ -50,6 +50,45 @@ export type Database = {
         }
         Relationships: []
       }
+      audit_log: {
+        Row: {
+          action: string
+          changed_at: string
+          changed_by: string | null
+          changed_by_name: string | null
+          changed_fields: string[]
+          id: number
+          new_data: Json | null
+          old_data: Json | null
+          record_id: string | null
+          table_name: string
+        }
+        Insert: {
+          action: string
+          changed_at?: string
+          changed_by?: string | null
+          changed_by_name?: string | null
+          changed_fields?: string[]
+          id?: never
+          new_data?: Json | null
+          old_data?: Json | null
+          record_id?: string | null
+          table_name: string
+        }
+        Update: {
+          action?: string
+          changed_at?: string
+          changed_by?: string | null
+          changed_by_name?: string | null
+          changed_fields?: string[]
+          id?: never
+          new_data?: Json | null
+          old_data?: Json | null
+          record_id?: string | null
+          table_name?: string
+        }
+        Relationships: []
+      }
       companies: {
         Row: {
           active: boolean

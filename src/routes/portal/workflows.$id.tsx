@@ -5,6 +5,7 @@ import { ArrowLeft, CheckCircle2, ChevronRight, Lock, Paperclip, Trash2, UploadC
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Panel, PortalHeading, fmtDate, usePortal } from "@/lib/portal";
+import { AdminEditButton } from "@/components/portal/RecordEditor";
 import { STEP_STATUSES, stepStatusLabel, type WorkflowStep } from "@/lib/workflow";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -201,9 +202,12 @@ function WorkflowDetail() {
         title={wf.title}
         subtitle={`${wf.workflow_no}${employeeName ? ` · ${employeeName}` : ""}`}
         actions={
-          <span className="text-sm font-semibold text-[color:var(--brand-red)]">
-            {done} of {steps.length} steps completed
-          </span>
+          <>
+            <span className="text-sm font-semibold text-[color:var(--brand-red)]">
+              {done} of {steps.length} steps completed
+            </span>
+            <AdminEditButton table="workflows" id={id} />
+          </>
         }
       />
 

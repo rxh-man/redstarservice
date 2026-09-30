@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import logo from "@/assets/red-star-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { AED, Panel, StatusBadge, fmtDate, usePortal } from "@/lib/portal";
+import { AdminEditButton } from "@/components/portal/RecordEditor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -231,6 +232,7 @@ function InvoiceDetail() {
               ) : null}
             </>
           ) : null}
+          <AdminEditButton table="invoices" id={id} />
           <Button size="sm" onClick={() => window.print()}>
             <Printer className="mr-2 h-4 w-4" /> Print / PDF
           </Button>

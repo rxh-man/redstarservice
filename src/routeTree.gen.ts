@@ -27,8 +27,11 @@ import { Route as PortalPayrollRouteImport } from './routes/portal/payroll'
 import { Route as PortalKiosksRouteImport } from './routes/portal/kiosks'
 import { Route as PortalJournalsRouteImport } from './routes/portal/journals'
 import { Route as PortalJobsRouteImport } from './routes/portal/jobs'
+import { Route as PortalFinancialsRouteImport } from './routes/portal/financials'
 import { Route as PortalEmployeesRouteImport } from './routes/portal/employees'
+import { Route as PortalDataRouteImport } from './routes/portal/data'
 import { Route as PortalCustomersRouteImport } from './routes/portal/customers'
+import { Route as PortalAuditRouteImport } from './routes/portal/audit'
 import { Route as PortalAccountsRouteImport } from './routes/portal/accounts'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as PortalWorkflowsIndexRouteImport } from './routes/portal/workflows.index'
@@ -128,14 +131,29 @@ const PortalJobsRoute = PortalJobsRouteImport.update({
   path: '/jobs',
   getParentRoute: () => PortalRouteRoute,
 } as any)
+const PortalFinancialsRoute = PortalFinancialsRouteImport.update({
+  id: '/financials',
+  path: '/financials',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
 const PortalEmployeesRoute = PortalEmployeesRouteImport.update({
   id: '/employees',
   path: '/employees',
   getParentRoute: () => PortalRouteRoute,
 } as any)
+const PortalDataRoute = PortalDataRouteImport.update({
+  id: '/data',
+  path: '/data',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
 const PortalCustomersRoute = PortalCustomersRouteImport.update({
   id: '/customers',
   path: '/customers',
+  getParentRoute: () => PortalRouteRoute,
+} as any)
+const PortalAuditRoute = PortalAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
   getParentRoute: () => PortalRouteRoute,
 } as any)
 const PortalAccountsRoute = PortalAccountsRouteImport.update({
@@ -189,8 +207,11 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/api/chat': typeof ApiChatRoute
   '/portal/accounts': typeof PortalAccountsRoute
+  '/portal/audit': typeof PortalAuditRoute
   '/portal/customers': typeof PortalCustomersRoute
+  '/portal/data': typeof PortalDataRoute
   '/portal/employees': typeof PortalEmployeesRoute
+  '/portal/financials': typeof PortalFinancialsRoute
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/journals': typeof PortalJournalsRoute
   '/portal/kiosks': typeof PortalKiosksRoute
@@ -218,8 +239,11 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/api/chat': typeof ApiChatRoute
   '/portal/accounts': typeof PortalAccountsRoute
+  '/portal/audit': typeof PortalAuditRoute
   '/portal/customers': typeof PortalCustomersRoute
+  '/portal/data': typeof PortalDataRoute
   '/portal/employees': typeof PortalEmployeesRoute
+  '/portal/financials': typeof PortalFinancialsRoute
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/journals': typeof PortalJournalsRoute
   '/portal/kiosks': typeof PortalKiosksRoute
@@ -249,8 +273,11 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/api/chat': typeof ApiChatRoute
   '/portal/accounts': typeof PortalAccountsRoute
+  '/portal/audit': typeof PortalAuditRoute
   '/portal/customers': typeof PortalCustomersRoute
+  '/portal/data': typeof PortalDataRoute
   '/portal/employees': typeof PortalEmployeesRoute
+  '/portal/financials': typeof PortalFinancialsRoute
   '/portal/jobs': typeof PortalJobsRoute
   '/portal/journals': typeof PortalJournalsRoute
   '/portal/kiosks': typeof PortalKiosksRoute
@@ -281,8 +308,11 @@ export interface FileRouteTypes {
     | '/services'
     | '/api/chat'
     | '/portal/accounts'
+    | '/portal/audit'
     | '/portal/customers'
+    | '/portal/data'
     | '/portal/employees'
+    | '/portal/financials'
     | '/portal/jobs'
     | '/portal/journals'
     | '/portal/kiosks'
@@ -310,8 +340,11 @@ export interface FileRouteTypes {
     | '/services'
     | '/api/chat'
     | '/portal/accounts'
+    | '/portal/audit'
     | '/portal/customers'
+    | '/portal/data'
     | '/portal/employees'
+    | '/portal/financials'
     | '/portal/jobs'
     | '/portal/journals'
     | '/portal/kiosks'
@@ -340,8 +373,11 @@ export interface FileRouteTypes {
     | '/services'
     | '/api/chat'
     | '/portal/accounts'
+    | '/portal/audit'
     | '/portal/customers'
+    | '/portal/data'
     | '/portal/employees'
+    | '/portal/financials'
     | '/portal/jobs'
     | '/portal/journals'
     | '/portal/kiosks'
@@ -500,6 +536,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalJobsRouteImport
       parentRoute: typeof PortalRouteRoute
     }
+    '/portal/financials': {
+      id: '/portal/financials'
+      path: '/financials'
+      fullPath: '/portal/financials'
+      preLoaderRoute: typeof PortalFinancialsRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
     '/portal/employees': {
       id: '/portal/employees'
       path: '/employees'
@@ -507,11 +550,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalEmployeesRouteImport
       parentRoute: typeof PortalRouteRoute
     }
+    '/portal/data': {
+      id: '/portal/data'
+      path: '/data'
+      fullPath: '/portal/data'
+      preLoaderRoute: typeof PortalDataRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
     '/portal/customers': {
       id: '/portal/customers'
       path: '/customers'
       fullPath: '/portal/customers'
       preLoaderRoute: typeof PortalCustomersRouteImport
+      parentRoute: typeof PortalRouteRoute
+    }
+    '/portal/audit': {
+      id: '/portal/audit'
+      path: '/audit'
+      fullPath: '/portal/audit'
+      preLoaderRoute: typeof PortalAuditRouteImport
       parentRoute: typeof PortalRouteRoute
     }
     '/portal/accounts': {
@@ -575,8 +632,11 @@ declare module '@tanstack/react-router' {
 
 interface PortalRouteRouteChildren {
   PortalAccountsRoute: typeof PortalAccountsRoute
+  PortalAuditRoute: typeof PortalAuditRoute
   PortalCustomersRoute: typeof PortalCustomersRoute
+  PortalDataRoute: typeof PortalDataRoute
   PortalEmployeesRoute: typeof PortalEmployeesRoute
+  PortalFinancialsRoute: typeof PortalFinancialsRoute
   PortalJobsRoute: typeof PortalJobsRoute
   PortalJournalsRoute: typeof PortalJournalsRoute
   PortalKiosksRoute: typeof PortalKiosksRoute
@@ -598,8 +658,11 @@ interface PortalRouteRouteChildren {
 
 const PortalRouteRouteChildren: PortalRouteRouteChildren = {
   PortalAccountsRoute: PortalAccountsRoute,
+  PortalAuditRoute: PortalAuditRoute,
   PortalCustomersRoute: PortalCustomersRoute,
+  PortalDataRoute: PortalDataRoute,
   PortalEmployeesRoute: PortalEmployeesRoute,
+  PortalFinancialsRoute: PortalFinancialsRoute,
   PortalJobsRoute: PortalJobsRoute,
   PortalJournalsRoute: PortalJournalsRoute,
   PortalKiosksRoute: PortalKiosksRoute,

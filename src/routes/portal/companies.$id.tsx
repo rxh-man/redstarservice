@@ -5,6 +5,7 @@ import { ArrowLeft, ListChecks, Pencil, Plus, Trash2, UserPlus } from "lucide-re
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Panel, PortalHeading, StatusBadge, fmtDate, usePortal } from "@/lib/portal";
+import { AdminEditButton } from "@/components/portal/RecordEditor";
 import { ExpiryDate } from "@/lib/expiry";
 import { startWorkflow } from "@/lib/workflow";
 import { Button } from "@/components/ui/button";
@@ -314,6 +315,7 @@ function CompanyDetail() {
         subtitle={(company["address"] as string) || undefined}
         actions={
           <div className="flex flex-wrap gap-2">
+            <AdminEditButton table="companies" id={id} />
             {isAccountant ? (
               <Button variant="outline" onClick={openEditCompany}>
                 <Pencil className="mr-2 h-4 w-4" /> Edit company
