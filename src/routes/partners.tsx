@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { Reveal } from "@/components/site/Reveal";
 import { PARTNERS, PartnerEmblem } from "@/components/site/PartnerEmblem";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/partners")({
   head: () => ({
@@ -16,13 +17,28 @@ export const Route = createFileRoute("/partners")({
 });
 
 function Partners() {
+  const { t } = useI18n();
   return (
     <>
       <PageHero
-        tag="Trusted by"
-        title="Our Strategic Partners"
-        subtitle="We work alongside UAE government entities and authorities to deliver fast, accurate and compliant services."
-      />
+        tag={t("Trusted by", "شركاؤنا")}
+        title={t("Our Strategic Partners", "شركاؤنا الاستراتيجيون")}
+        subtitle={t(
+          "We work alongside UAE government entities and authorities to deliver fast, accurate and compliant services.",
+          "نعمل جنباً إلى جنب مع الجهات الحكومية في الإمارات لتقديم خدمات سريعة ودقيقة ومتوافقة.",
+        )}
+      >
+        <div className="mt-8 flex flex-wrap gap-8">
+          <div>
+            <div className="text-3xl font-bold">{PARTNERS.length}+</div>
+            <div className="text-sm text-primary-foreground/60">{t("Government entities", "جهة حكومية")}</div>
+          </div>
+          <div>
+            <div className="text-3xl font-bold">7</div>
+            <div className="text-sm text-primary-foreground/60">{t("Emirates served", "إمارات نخدمها")}</div>
+          </div>
+        </div>
+      </PageHero>
       <section className="py-16">
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">

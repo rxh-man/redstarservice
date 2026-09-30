@@ -6,7 +6,8 @@ import { useI18n } from "@/lib/i18n";
 export function SiteFooter() {
   const { t } = useI18n();
   return (
-    <footer className="mt-20 bg-[color:var(--foreground)] text-[color:var(--primary-foreground)] border-t border-border">
+    <footer className="relative mt-20 bg-[color:var(--foreground)] text-[color:var(--primary-foreground)] border-t border-border">
+      <div aria-hidden className="h-1 w-full bg-gradient-gold" />
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-3">
@@ -38,12 +39,12 @@ export function SiteFooter() {
         <div>
           <h4 className="text-[color:var(--brand-red)] font-semibold mb-3">{t("Services", "الخدمات")}</h4>
           <ul className="space-y-2 text-sm opacity-80">
-            <li>{t("Tasheel", "تسهيل")}</li>
-            <li>{t("Tawjeeh", "توجيه")}</li>
-            <li>{t("Immigration", "الهجرة")}</li>
-            <li>{t("Emirates ID", "الهوية الإماراتية")}</li>
-            <li>{t("Typing & Translation", "الطباعة والترجمة")}</li>
-            <li>{t("SEDD & Municipality", "الاقتصادية والبلدية")}</li>
+            <li><Link to="/services" className="hover:text-[color:var(--brand-red)] transition">{t("Tasheel", "تسهيل")}</Link></li>
+            <li><Link to="/services" className="hover:text-[color:var(--brand-red)] transition">{t("Tawjeeh", "توجيه")}</Link></li>
+            <li><Link to="/services" className="hover:text-[color:var(--brand-red)] transition">{t("Immigration", "الهجرة")}</Link></li>
+            <li><Link to="/services" className="hover:text-[color:var(--brand-red)] transition">{t("Emirates ID", "الهوية الإماراتية")}</Link></li>
+            <li><Link to="/services" className="hover:text-[color:var(--brand-red)] transition">{t("Typing & Translation", "الطباعة والترجمة")}</Link></li>
+            <li><Link to="/services" className="hover:text-[color:var(--brand-red)] transition">{t("SEDD & Municipality", "الاقتصادية والبلدية")}</Link></li>
           </ul>
         </div>
 
@@ -56,11 +57,11 @@ export function SiteFooter() {
             </li>
             <li className="flex items-start gap-2">
               <Phone className="h-4 w-4 text-[color:var(--brand-red)] mt-0.5 shrink-0" />
-              <span>055 331 3325</span>
+              <a href="tel:+971553313325" dir="ltr" className="hover:text-[color:var(--brand-red)] transition">055 331 3325</a>
             </li>
             <li className="flex items-start gap-2">
               <Mail className="h-4 w-4 text-[color:var(--brand-red)] mt-0.5 shrink-0" />
-              <span>info@redstarservices.ae</span>
+              <a href="mailto:info@redstarservices.ae" className="hover:text-[color:var(--brand-red)] transition">info@redstarservices.ae</a>
             </li>
           </ul>
         </div>
